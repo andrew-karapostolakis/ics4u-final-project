@@ -1,4 +1,4 @@
-package com.survive.and.thrive.desktop;
+package com.surviveandthrive.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
