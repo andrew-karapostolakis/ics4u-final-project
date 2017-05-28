@@ -35,7 +35,7 @@ public abstract class Item {
 
     /**
      * will return the amount of items
-     * @return int amount
+     * @return integer amount
      */
     public int getAmount() {
         return amount;
