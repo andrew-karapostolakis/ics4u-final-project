@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* Brandon Lit
+ * 2017-05-27
+ * This is the Item class*/
 package com.surviveandthrive;
 
 /**
@@ -10,5 +8,35 @@ package com.surviveandthrive;
  * @author Brandon
  */
 public class Item {
-    
+
+    private String name;
+    private int amount;
+    protected boolean isEdible;
+
+    public Item(String n, int a, boolean isE) {
+        name = n;
+        amount = a;
+        isEdible = isE;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getAmount(){
+        return amount;
+    }
+
+    public void setAmount(int newAmount){
+        amount = newAmount;
+    }
+
+    public void addItem(int a){
+        amount += a;
+    }
+
+    public void removeItem(int a){
+        amount -= a;
+    }
+
 }
