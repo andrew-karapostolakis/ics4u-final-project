@@ -13,30 +13,53 @@ public abstract class Item {
     private int amount;
     protected boolean isEdible;
 
+    /**
+     * The constructor for all items
+     * @param n the name of the item
+     * @param a the amount of that item
+     * @param isE is Edible or not
+     */
     public Item(String n, int a, boolean isE) {
         name = n;
         amount = a;
         isEdible = isE;
     }
 
-    public String getName(){
+    /**
+     * will get the name of the item
+     * @return String name
+     */
+    public String getName() {
         return name;
     }
 
-    public int getAmount(){
+    /**
+     * will return the amount of items
+     * @return int amount
+     */
+    public int getAmount() {
         return amount;
     }
-
-    public void setAmount(int newAmount){
+    /**
+     * sets the amount of items to a new number
+     * @param newAmount the new integer to replace the old amount
+     */
+    public void setAmount(int newAmount) {
         amount = newAmount;
     }
-
-    public void addItem(int a){
-        amount += a;
+    /**
+     * adds X number of items to the current total
+     * @param x the amount of items to be added
+     */
+    public void addItem(int x) {
+        amount += x;
     }
-
-    public void removeItem(int a){
-        amount -= a;
+    /**
+     * subtracts X number of items from the current total
+     * @param x the amount of items to be subtracted
+     */
+    public void removeItem(int x) {
+        amount -= x;
     }
 
 }
