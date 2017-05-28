@@ -1,13 +1,13 @@
 /* Brandon Lit
  * 2017-05-27
- * This is the Item class*/
+ * This is the abstract Item class*/
 package com.surviveandthrive;
 
 /**
  *
  * @author Brandon
  */
-public class Item {
+public abstract class Item {
 
     private String name;
     private int amount;
