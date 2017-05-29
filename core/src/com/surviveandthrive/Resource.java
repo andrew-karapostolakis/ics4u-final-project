@@ -24,7 +24,7 @@ public class Resource extends Item {
 
     /**
      * Returns if the resource is in a recipe
-     * @return 
+     * @return the boolean in recipe
      */
     public boolean inRecipe(){
         //place holder value
