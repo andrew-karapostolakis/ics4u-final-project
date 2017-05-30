@@ -22,4 +22,17 @@ public class Interactables {
     public Interactables(String nName){
         name = nName;
     }
+    /**
+     * get the image for the interactable
+     * @return the texture/picture
+     */
+    public Texture getImage(){
+        return tileImg;
+    }
+    /**
+     * draw the picture
+     */
+    public void draw(){
+        
+    }
 }

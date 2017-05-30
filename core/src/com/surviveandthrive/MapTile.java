@@ -21,6 +21,7 @@ public class MapTile {
      */
     public MapTile(String nBiome){
         biome = nBiome;
+        selectImage();
     }
     /**
      * returns the image of for the biome that you are in
@@ -29,11 +30,17 @@ public class MapTile {
     public Texture getImage(){
         return tileImg;
     }
+    /**
+     * draw the tile on the screen
+     */
     public void draw(){
         
     }
+    /**
+     * pick what image to use for the tile, based on the biome type
+     */
     private void selectImage(){
-        //planes, hills, forest, mountain, lake, desert
+        //check to see which biome the tile is, and set the picture accordingly
         if(biome.equals("plane")){
             
         }else if(biome.equals("forest")){
