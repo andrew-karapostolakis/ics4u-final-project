@@ -40,7 +40,7 @@ public class MainMenu implements Screen {
     public void show() {
         stage = new Stage();
 
-        atlas = new TextureAtlas("ui/Button.atlas");
+        atlas = new TextureAtlas("UI/Button.atlas");
         skin = new Skin(atlas);
 
         table = new Table(skin);
