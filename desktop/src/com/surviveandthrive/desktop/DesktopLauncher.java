@@ -9,6 +9,9 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
                 
                 config.title = "Survive And Thrive";
+                config.width = 500;
+                config.height = 500;
+                
 		new LwjglApplication(new SurviveAndThrive(), config);
 	}
 }

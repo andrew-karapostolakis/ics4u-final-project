@@ -32,7 +32,9 @@ public class SurviveAndThrive extends Game {
 
     @Override
     public void render() {
-        this.setScreen(new MainMenu());
+        this.setScreen(new MainMenu(this));
+        
+        
     }
 
     @Override

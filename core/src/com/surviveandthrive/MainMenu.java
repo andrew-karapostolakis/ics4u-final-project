@@ -29,6 +29,12 @@ public class MainMenu implements Screen {
     private TextButton start, exit;
     private BitmapFont white, black;
     private Label heading;
+    
+    private SurviveAndThrive game;
+    
+    public MainMenu(SurviveAndThrive game){
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -47,16 +53,20 @@ public class MainMenu implements Screen {
 
         textButtonStyle.up = skin.getDrawable("button_up.9.png");
         textButtonStyle.down = skin.getDrawable("button_down.9.png");
-        textButtonStyle.pressedOffsetX = 1;
-        textButtonStyle.pressedOffsetY = -1;
+        //textButtonStyle.pressedOffsetX = 1;
+        //textButtonStyle.pressedOffsetY = -1;
         textButtonStyle.font = black;
 
         start = new TextButton("Start", textButtonStyle);
         start.pad(20);
-
+        start.setPosition(100,100);
+        start.setWidth(250);
+        start.setHeight(250);
+        
         table.add(start);
-        table.debug();
+        //table.debug();
         stage.addActor(table);
+        stage.draw();
     }
 
     @Override
@@ -64,14 +74,14 @@ public class MainMenu implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        stage.act(f);
         
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
     @Override
     public void resize(int i, int i1) {
-
+        
     }
 
     @Override
