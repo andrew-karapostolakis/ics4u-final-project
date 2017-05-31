@@ -16,11 +16,13 @@ public class SurviveAndThrive extends ApplicationAdapter {
     Texture car;
     Rectangle test = new Rectangle();
     Sprite sprite;
+	Player testPlayer;
     @Override
     public void create() {
         batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         car = new Texture("car.png");
+		testPlayer = new Player("Jeff");
         sprite = new Sprite(car);
         sprite.setOrigin(0,0);
         sprite.setPosition(0,0);
@@ -35,17 +37,18 @@ public class SurviveAndThrive extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        sprite.draw(batch);
+        //sprite.draw(batch);
         //batch.draw(img, 0, 0);
         //draws the car at the tests x and y locations
-        batch.draw(car, test.x, test.y);
+        //batch.draw(car, test.x, test.y);
+		batch.draw(testPlayer, testPlayer.getX(), testPlayer.getY());
         batch.end();
 
         //these if statements check to see if the arrow keys are being pressed
-        if(Gdx.input.isKeyPressed(Keys.LEFT)) test.x -= 15;
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)) test.x += 15;
-        if(Gdx.input.isKeyPressed(Keys.DOWN)) test.y -= 15;
-        if(Gdx.input.isKeyPressed(Keys.UP)) test.y += 15;
+        if(Gdx.input.isKeyPressed(Keys.LEFT)) testPlayer.translateX(-15); //test.x -= 15;
+        if(Gdx.input.isKeyPressed(Keys.RIGHT)) testPlayer.translateX(15); //test.x += 15;
+        if(Gdx.input.isKeyPressed(Keys.DOWN)) testPlayer.translateY(-15); //test.y -= 15;
+        if(Gdx.input.isKeyPressed(Keys.UP)) testPlayer.translateY(15); //test.y += 15;
         
     }
 

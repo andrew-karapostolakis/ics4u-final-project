@@ -3,11 +3,14 @@
  * Class to store the player's attributes*/
 package com.surviveandthrive;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 /**
  *
  * @author andrew
  */
-public class Player {
+public class Player extends Sprite {
 	private String name;
 	private int health;
 	//private Item[] inventory;
@@ -16,7 +19,11 @@ public class Player {
 	private int food;
 	
 	public Player(String name) {
+		super(new Texture("playerTemp.png"));
 		this.name = name;
+		//super.setCenter(super.getWidth() / 2, super.getHeight() / 2);
+		super.setPosition(100, 100);
+		//TODO: set player image
 		health = 100;
 		score = 0;
 		food = 75;
