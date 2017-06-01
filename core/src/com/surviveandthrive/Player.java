@@ -21,7 +21,6 @@ public class Player extends Sprite {
 	public Player(String name) {
 		super(new Texture("playerTemp.png"));
 		this.name = name;
-		//super.setCenter(super.getWidth() / 2, super.getHeight() / 2);
 		super.setPosition(100, 100);
 		//TODO: set player image
 		health = 100;
