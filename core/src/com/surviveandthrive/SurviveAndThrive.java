@@ -32,6 +32,7 @@ public class SurviveAndThrive extends Game {
 
     @Override
     public void render() {
+        super.render();
         this.setScreen(new MainMenu(this));
         
         
