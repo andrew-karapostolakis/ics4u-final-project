@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -19,7 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 public class MainMenu implements Screen {
 
@@ -44,7 +44,8 @@ public class MainMenu implements Screen {
     public void show() {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
+        
+        
         atlas = new TextureAtlas("UI/Button.atlas");
         skin = new Skin(atlas);
 
@@ -66,7 +67,18 @@ public class MainMenu implements Screen {
         start.pad(20);
 
         exit = new TextButton("Exit", textButtonStyle);
+        //exit.setBounds(150, 50, 150, 200);
+        exit.addListener(new ChangeListener(){
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+               // Gdx.app.exit();
+                System.out.println("fhgjbkasd");
+            }
+        });
         exit.pad(15);
+
+        exit.debug();
+        exit.setPosition(250,250);
 
         instructions = new TextButton("Instructions", textButtonStyle);
         instructions.pad(35);
@@ -75,31 +87,20 @@ public class MainMenu implements Screen {
 
         labelStyle.font = white;
 
-        start.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                start.setText("Pressed");
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                start.setText("Pressed");
-                return true;
-            }
-        });
-
         heading = new Label("Survive and Thrive", labelStyle);
-        table.add(heading);
-        table.row();
-        table.add(start);
-        table.row();
-        table.add(instructions);
-        table.row();
+
+       // table.add(heading);
+        //table.row();
+        //table.add(start);
+        //table.row();
+        //table.add(instructions);
+        //table.row();
         table.add(exit);
 
-        //table.debug();
-        stage.addActor(table);
+        table.debug();
 
+        stage.addActor(table);
+        
     }
 
     @Override
@@ -108,19 +109,26 @@ public class MainMenu implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act(Gdx.graphics.getDeltaTime());
+        //stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
 
     }
 
     @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
+    @Override
     public void resize(int i, int i1) {
+
+       
 
     }
 
     @Override
     public void pause() {
-
+       
     }
 
     @Override
@@ -130,11 +138,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
 
     }
 

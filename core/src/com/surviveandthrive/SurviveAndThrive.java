@@ -15,16 +15,6 @@ import java.util.Set;
 
 public class SurviveAndThrive extends Game {
 
-    Stage mainMenu;
-    Table menu;
-    Skin start;
-
-    public SpriteBatch batch;
-    Texture startBtn;
-    Texture car;
-    Rectangle test = new Rectangle();
-    Sprite sprite;
-
     @Override
     public void create() {
 
