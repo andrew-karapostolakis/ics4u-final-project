@@ -1,6 +1,6 @@
 package com.surviveandthrive;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +15,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class SurviveAndThrive extends ApplicationAdapter implements InputProcessor{
+public class SurviveAndThrive extends Game implements InputProcessor{
+    int[] backgroundLayers = {0};
+    int[] foregroundLayers = {1};
     Texture img;
     TiledMap map;
     OrthographicCamera cam;
