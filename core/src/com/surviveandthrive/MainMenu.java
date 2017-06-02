@@ -63,6 +63,22 @@ public class MainMenu implements Screen {
         textButtonStyle.font = black;
 
         start = new TextButton("Start", textButtonStyle);
+        start.setBounds(190,300,130,100);
+        start.addListener(new InputListener()
+        {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
+            {
+                System.out.println("start game");
+                return true;
+            }
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+                
+            }
+        });
+
         start.pad(20);
 
         exit = new TextButton("Exit", textButtonStyle);
