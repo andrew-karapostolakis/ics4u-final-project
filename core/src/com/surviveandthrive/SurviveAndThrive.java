@@ -43,7 +43,7 @@ public class SurviveAndThrive extends ApplicationAdapter implements InputProcess
         cam = new OrthographicCamera();
         cam.setToOrtho(false,w,h);
         map = new TmxMapLoader().load("takethree.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 4/1f);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -87,9 +87,9 @@ public class SurviveAndThrive extends ApplicationAdapter implements InputProcess
         if(keycode == Input.Keys.RIGHT)
             cam.translate(32,0);
         if(keycode == Input.Keys.UP)
-            cam.translate(0,-32);
-        if(keycode == Input.Keys.DOWN)
             cam.translate(0,32);
+        if(keycode == Input.Keys.DOWN)
+            cam.translate(0,-32);
         if(keycode == Input.Keys.NUM_1)
             map.getLayers().get(0).setVisible(!map.getLayers().get(0).isVisible());
         if(keycode == Input.Keys.NUM_2)
