@@ -1,5 +1,5 @@
 /* A Karapostolakis
- * 2017-05-29
+ * 2017-06-02
  * Class to store the player's attributes*/
 package com.surviveandthrive;
 
@@ -21,7 +21,7 @@ public class Player extends Sprite {
 	public Player(String name) {
 		super(new Texture("playerTemp.png"));
 		this.name = name;
-		super.setPosition(100, 100);
+		super.setPosition(0, 0);
 		//TODO: set player image
 		health = 100;
 		score = 0;

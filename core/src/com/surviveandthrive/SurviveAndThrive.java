@@ -1,6 +1,7 @@
 package com.surviveandthrive;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class SurviveAndThrive implements ApplicationListener {
+public class SurviveAndThrive extends Game implements ApplicationListener {
 
 	SpriteBatch batch;
 	Texture img;
@@ -33,7 +34,7 @@ public class SurviveAndThrive implements ApplicationListener {
 		test.width = 60;
 		test.x = 100;
 		test.y = 60;
-		cam = new OrthographicCamera(Gdx.graphics.getWidth()/* / 2f*/, Gdx.graphics.getHeight()/* / 2f*/);
+		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -58,6 +59,7 @@ public class SurviveAndThrive implements ApplicationListener {
 		cam.update();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.setProjectionMatrix(cam.combined);
 		batch.begin();
 		//sprite.draw(batch);
 		//batch.draw(img, 0, 0);
