@@ -41,7 +41,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-
+        
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
@@ -50,7 +50,7 @@ public class MainMenu implements Screen {
 
         table = new Table(skin);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
+        
         white = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFont.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFontBlack.fnt"), false);
 
@@ -66,39 +66,43 @@ public class MainMenu implements Screen {
         start.pad(20);
 
         exit = new TextButton("Exit", textButtonStyle);
-<<<<<<< HEAD
-        System.out.println(exit.getX());
-        exit.setBounds(exit.getX(), exit.getY(), 150, 200);
+        exit.setBounds(200, 125, 0, 0);
         exit.addListener(new InputListener()
         {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
             {
-                //Gdx.app.exit();
-                System.out.println("tdfhgjkl");
+                Gdx.app.exit();
                 return true;
             }
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button)
             {
                 
-=======
-        //exit.setBounds(150, 50, 150, 200);
-        exit.addListener(new ChangeListener(){
-        @Override
-        public void changed(ChangeEvent event, Actor actor) {
-               Gdx.app.exit();
-                System.out.println("fhgjbkasd");
->>>>>>> 6114c21088b577da040ed6741e7f8145e9136e9e
             }
         });
 
         exit.pad(15);
-
         exit.debug();
-        exit.setPosition(250, 250);
 
         instructions = new TextButton("Instructions", textButtonStyle);
+        instructions.setBounds(100, 180, 300, 100);
+        instructions.debug();
+        instructions.addListener(new InputListener()
+        {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
+            {
+                System.out.println("//TODO add instructions");
+                return true;
+            }
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button)
+            {
+                
+            }
+        });
+        
         instructions.pad(35);
 
         LabelStyle labelStyle = new LabelStyle();
