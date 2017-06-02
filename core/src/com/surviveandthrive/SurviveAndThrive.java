@@ -62,10 +62,18 @@ public class SurviveAndThrive extends ApplicationAdapter implements InputProcess
         mapRenderer.setView(cam);
         mapRenderer.render();
         //these if statements check to see if the arrow keys are being pressed
-        /*if(Gdx.input.isKeyPressed(Keys.LEFT)) test.x -= 15;
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)) test.x += 15;
-        if(Gdx.input.isKeyPressed(Keys.DOWN)) test.y -= 15;
-        if(Gdx.input.isKeyPressed(Keys.UP)) test.y += 15;*/
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            cam.translate(-4,0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            cam.translate(4,0);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            cam.translate(0,-4);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            cam.translate(0,4);
+        }
         
     }
 
@@ -77,12 +85,13 @@ public class SurviveAndThrive extends ApplicationAdapter implements InputProcess
     }
     @Override
     public boolean keyDown(int keycode) {
+        
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.LEFT)
+        /*if(keycode == Input.Keys.LEFT)
             cam.translate(-32,0);
         if(keycode == Input.Keys.RIGHT)
             cam.translate(32,0);
@@ -93,12 +102,12 @@ public class SurviveAndThrive extends ApplicationAdapter implements InputProcess
         if(keycode == Input.Keys.NUM_1)
             map.getLayers().get(0).setVisible(!map.getLayers().get(0).isVisible());
         if(keycode == Input.Keys.NUM_2)
-            map.getLayers().get(1).setVisible(!map.getLayers().get(1).isVisible());
+            map.getLayers().get(1).setVisible(!map.getLayers().get(1).isVisible());*/
         return false;
     }
      @Override
     public boolean keyTyped(char character) {
-
+        
         return false;
     }
 
