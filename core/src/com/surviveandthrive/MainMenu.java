@@ -66,6 +66,7 @@ public class MainMenu implements Screen {
         start.pad(20);
 
         exit = new TextButton("Exit", textButtonStyle);
+<<<<<<< HEAD
         System.out.println(exit.getX());
         exit.setBounds(exit.getX(), exit.getY(), 150, 200);
         exit.addListener(new InputListener()
@@ -81,6 +82,14 @@ public class MainMenu implements Screen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button)
             {
                 
+=======
+        //exit.setBounds(150, 50, 150, 200);
+        exit.addListener(new ChangeListener(){
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+               Gdx.app.exit();
+                System.out.println("fhgjbkasd");
+>>>>>>> 6114c21088b577da040ed6741e7f8145e9136e9e
             }
         });
 
