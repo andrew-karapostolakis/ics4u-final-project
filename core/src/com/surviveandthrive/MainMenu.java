@@ -5,7 +5,9 @@ package com.surviveandthrive;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainMenu implements Screen {
 
@@ -32,7 +35,7 @@ public class MainMenu implements Screen {
     private TextButton start, exit, instructions;
     private BitmapFont white, black;
     private Label heading;
-
+    
     private SurviveAndThrive game;
 
     public MainMenu(SurviveAndThrive game) {
@@ -41,8 +44,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void show() {
-        
-        stage = new Stage();
+        stage = new Stage(new FitViewport(500,500));
         Gdx.input.setInputProcessor(stage);
 
         atlas = new TextureAtlas("UI/Button.atlas");
@@ -159,7 +161,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-        stage.getViewport().update(i, i1, true);
+        stage.getViewport().update(i, i1, false);
     }
 
     @Override

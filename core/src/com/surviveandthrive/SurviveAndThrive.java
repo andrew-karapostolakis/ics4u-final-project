@@ -27,9 +27,4 @@ public class SurviveAndThrive extends Game {
         
         
     }
-
-    @Override
-    public void dispose() {
-
-    }
 }
