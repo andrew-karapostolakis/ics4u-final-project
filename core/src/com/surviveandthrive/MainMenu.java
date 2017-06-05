@@ -51,6 +51,7 @@ public class MainMenu implements Screen {
         skin = new Skin(atlas);
 
         table = new Table(skin);
+        table.setFillParent(true);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         
         white = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFont.fnt"), false);
