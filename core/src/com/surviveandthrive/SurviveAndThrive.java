@@ -53,8 +53,9 @@ public class SurviveAndThrive extends Game implements InputProcessor{
         //these if statements check to see if the arrow keys are being pressed
         
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if()
+            if(true){
                 cam.translate(-4,0);
+            }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             cam.translate(4,0);
