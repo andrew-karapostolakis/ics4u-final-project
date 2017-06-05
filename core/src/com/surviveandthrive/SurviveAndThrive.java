@@ -22,22 +22,9 @@ public class SurviveAndThrive extends Game implements InputProcessor{
     TiledMap map;
     OrthographicCamera cam;
     TiledMapRenderer mapRenderer;
-    SpriteBatch batch;
-    Texture car;
-    Rectangle test = new Rectangle();
-    Sprite sprite;
+    
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
-        car = new Texture("car.png");
-        sprite = new Sprite(car);
-        sprite.setOrigin(0,0);
-        sprite.setPosition(0,0);
-        test.height = 80;
-        test.width = 60;
-        test.x = 100;
-        test.y = 60;
         
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -64,8 +51,10 @@ public class SurviveAndThrive extends Game implements InputProcessor{
         mapRenderer.setView(cam);
         mapRenderer.render();
         //these if statements check to see if the arrow keys are being pressed
+        
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            cam.translate(-4,0);
+            if()
+                cam.translate(-4,0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             cam.translate(4,0);
@@ -81,9 +70,7 @@ public class SurviveAndThrive extends Game implements InputProcessor{
 
     @Override
     public void dispose() {
-        batch.dispose();
-        car.dispose();
-        img.dispose();
+        
     }
     @Override
     public boolean keyDown(int keycode) {
