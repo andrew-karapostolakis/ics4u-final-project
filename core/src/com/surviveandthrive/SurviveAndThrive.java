@@ -1,5 +1,7 @@
 package com.surviveandthrive;
 
+
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -15,9 +17,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-public class SurviveAndThrive extends Game implements InputProcessor{
+public class SurviveAndThrive extends Game implements InputProcessor, ApplicationListener{
     int[] backgroundLayers = {0};
     int[] foregroundLayers = {1};
+    SpriteBatch batch;
+    Sprite sprite;
+    Player testPlayer;
     Texture img;
     TiledMap map;
     OrthographicCamera cam;
@@ -25,7 +30,8 @@ public class SurviveAndThrive extends Game implements InputProcessor{
     
     @Override
     public void create() {
-        
+        batch = new SpriteBatch();
+	testPlayer = new Player("Jeff");
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         //set up the map and camera
@@ -41,37 +47,39 @@ public class SurviveAndThrive extends Game implements InputProcessor{
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        /*batch.begin();
-        sprite.draw(batch);
-        //batch.draw(img, 0, 0);
-        //draws the car at the tests x and y locations
-        batch.draw(car, test.x, test.y);
-        batch.end();*/
         cam.update();
         mapRenderer.setView(cam);
         mapRenderer.render();
+        batch.setProjectionMatrix(cam.combined);
+	batch.begin();
+        testPlayer.draw(batch);
+	batch.end();
         //these if statements check to see if the arrow keys are being pressed
         
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             if(true){
                 cam.translate(-4,0);
+                testPlayer.translateX(-4);
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             cam.translate(4,0);
+            testPlayer.translateX(4);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             cam.translate(0,-4);
+            testPlayer.translateY(-4);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             cam.translate(0,4);
+            testPlayer.translateY(4);
         }
         
     }
 
     @Override
     public void dispose() {
-        
+        batch.dispose();
     }
     @Override
     public boolean keyDown(int keycode) {
@@ -125,5 +133,6 @@ public class SurviveAndThrive extends Game implements InputProcessor{
     public boolean scrolled(int amount) {
         return false;
     }
+
 }
 
