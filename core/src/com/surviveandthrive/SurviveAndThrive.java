@@ -40,6 +40,9 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         map = new TmxMapLoader().load("takethree.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 4/1f);
         Gdx.input.setInputProcessor(this);
+        testPlayer.setSize(48,88);
+        testPlayer.setPosition(5276,5256);
+        cam.translate(5000,5000);
     }
 
     @Override
@@ -52,7 +55,9 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         mapRenderer.render();
         batch.setProjectionMatrix(cam.combined);
 	batch.begin();
+        //mapRenderer.render(backgroundLayers);
         testPlayer.draw(batch);
+        //mapRenderer.render(foregroundLayers);
 	batch.end();
         //these if statements check to see if the arrow keys are being pressed
         
