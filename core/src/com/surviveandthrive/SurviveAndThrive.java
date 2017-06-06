@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SurviveAndThrive extends Game {
 
@@ -32,6 +34,8 @@ public class SurviveAndThrive extends Game {
 
     @Override
     public void render() {
+        this.setScreen(new Inventory());
+        
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
