@@ -20,7 +20,7 @@ public class SurviveAndThrive extends Game {
     Sprite sprite;
     @Override
     public void create() {
-        batch = new SpriteBatch();
+        /*batch = new SpriteBatch();
         img = new Texture("badlogic.jpg");
         car = new Texture("car.png");
         sprite = new Sprite(car);
@@ -30,12 +30,14 @@ public class SurviveAndThrive extends Game {
         test.width = 60;
         test.x = 100;
         test.y = 60;
+                */
     }
 
     @Override
     public void render() {
+        super.render();
         this.setScreen(new Inventory());
-        
+        /*
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -58,5 +60,6 @@ public class SurviveAndThrive extends Game {
         batch.dispose();
         car.dispose();
         img.dispose();
+                */
     }
 }
