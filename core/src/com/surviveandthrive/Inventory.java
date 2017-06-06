@@ -32,7 +32,8 @@ public class Inventory implements Screen{
 
 	public void show () {
 		stage = new Stage();
-		Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+                //Atlas atlas = new Atlas("uiskin.atlas");
+		Skin skin = new Skin();
 		Gdx.input.setInputProcessor(stage);
 
 		// Gdx.graphics.setVSync(false);
