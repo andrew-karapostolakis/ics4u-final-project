@@ -8,12 +8,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -27,7 +29,11 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     TiledMap map;
     OrthographicCamera cam;
     TiledMapRenderer mapRenderer;
-    
+    TiledMapTileLayer trees;
+    int playerX, playerY;
+    TiledMapTileLayer layer;
+    Cell cell;
+    TiledMapTile tile;
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -43,6 +49,7 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         testPlayer.setSize(48,88);
         testPlayer.setPosition(5276,5256);
         cam.translate(5000,5000);
+
     }
 
     @Override
@@ -52,20 +59,31 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         cam.update();
         mapRenderer.setView(cam);
-        mapRenderer.render();
         batch.setProjectionMatrix(cam.combined);
+        //draw the background
+        mapRenderer.render(backgroundLayers);
 	batch.begin();
-        //mapRenderer.render(backgroundLayers);
+        //draw the player
         testPlayer.draw(batch);
-        //mapRenderer.render(foregroundLayers);
-	batch.end();
-        //these if statements check to see if the arrow keys are being pressed
         
+	batch.end();
+        //draw the foreground
+        mapRenderer.render(foregroundLayers);
+        //these if statements check to see if the arrow keys are being pressed
+        playerX = (int)testPlayer.getX()/60;
+        playerY = (int)testPlayer.getY()/60;
+        System.out.println(playerX + ", " + playerY);
+        layer = (TiledMapTileLayer)map.getLayers().get("Tile Layer 1");
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if(true){
-                cam.translate(-4,0);
-                testPlayer.translateX(-4);
-            }
+            cell = layer.getCell(playerX + 52, playerY);
+                if(cell != null){
+                    tile = cell.getTile();
+                    if(!tile.getProperties().containsKey("water")){
+                        cam.translate(-4,0);
+                        testPlayer.translateX(-4);
+                    }
+                }
+            
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             cam.translate(4,0);
