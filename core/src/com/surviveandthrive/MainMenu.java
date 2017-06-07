@@ -40,10 +40,7 @@ public class MainMenu implements Screen {
 
     public MainMenu(SurviveAndThrive game) {
         this.game = game;
-    }
-
-    @Override
-    public void show() {
+        
         stage = new Stage(new FitViewport(500,500));
         Gdx.input.setInputProcessor(stage);
 
@@ -53,6 +50,12 @@ public class MainMenu implements Screen {
         table = new Table(skin);
         table.setFillParent(true);
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    @Override
+    public void show() {
+        
+
         
         white = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFont.fnt"), false);
         black = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFontBlack.fnt"), false);
