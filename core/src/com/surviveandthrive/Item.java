@@ -3,6 +3,8 @@
  * This is the abstract Item class*/
 package com.surviveandthrive;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 /**
  *
  * @author Brandon
@@ -12,6 +14,7 @@ public abstract class Item {
     private String name;
     private int amount;
     protected boolean isEdible;
+    Skin image;
 
     /**
      * The constructor for all items
@@ -19,10 +22,11 @@ public abstract class Item {
      * @param a the amount of that item
      * @param isE is Edible or not
      */
-    public Item(String n, int a, boolean isE) {
+    public Item(String n, int a, boolean isE, Skin s) {
         name = n;
         amount = a;
         isEdible = isE;
+        image = s;
     }
 
     /**
@@ -62,4 +66,8 @@ public abstract class Item {
         amount -= x;
     }
 
+    
+    public Skin getImage(){
+        return image;
+    }
 }

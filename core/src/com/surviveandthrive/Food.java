@@ -3,6 +3,8 @@
  * This is the food class, it extends the Item class*/
 package com.surviveandthrive;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 /**
  *
  * @author Brandon
@@ -18,8 +20,8 @@ public class Food extends Item {
      * @param isE is the food edible
      * @param f the food value of the food
      */
-    public Food(String n, int a, boolean isE, int f) {
-        super(n, a, isE);
+    public Food(String n, int a, boolean isE, int f, Skin s) {
+        super(n, a, isE, s);
         foodValue = f;
     }
 

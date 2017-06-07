@@ -33,6 +33,7 @@ public class Inventory implements Screen {
     private Stage stage;
     private Table container;
     private TextureAtlas atlas;
+    private ItemSlot[][] items = new ItemSlot[10][10];
 
     public void show() {
         stage = new Stage();
@@ -40,13 +41,29 @@ public class Inventory implements Screen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-		// Gdx.graphics.setVSync(false);
+        // Gdx.graphics.setVSync(false);
         container = new Table();
         stage.addActor(container);
         container.setFillParent(true);
 
         Table table = new Table();
         // table.debug();
+
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 8; y++) {
+                items[x][y] = new ItemSlot("" + x, skin.get("toggle", TextButtonStyle.class), x, y);
+                items[x][y].setPosition(20 + (y * 50), 300 + (x * 50));
+                items[x][y].setSize(50, 50);
+                items[x][y].addListener(new InventoryListener(x, y) {
+                    @Override
+                    public boolean touchDown(InputEvent event, float xPos, float yPos, int pointer, int button) {
+                        System.out.println(items[x][y].getXButton());
+                        return true;
+                    }
+                });
+                stage.addActor(items[x][y]);
+            }
+        }
 
         final ScrollPane scroll = new ScrollPane(table, skin);
 
@@ -58,32 +75,22 @@ public class Inventory implements Screen {
         };
 
         table.pad(10).defaults().expandX().space(4);
-        
+
         table.row();
-         //table.add(new Label("Items", skin)).expandX().fillX();
+        //table.add(new Label("Items", skin)).expandX().fillX();
 
         Label screenTitle = new Label("Items", skin);
-        
+
         screenTitle.setPosition(10, 570);
         //Container title = new Container(screenTitle);
-        
+
         //title.top();
         stage.addActor(screenTitle);
 
-        TextButton button = new TextButton("dos", skin);
-        table.add(button);
-        button.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("click " + x + ", " + y);
-            }
-        });
-
-        Slider slider = new Slider(0, 100, 1, false, skin);
-        slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-        table.add(slider);
-
+        //Slider slider = new Slider(0, 100, 1, false, skin);
+        // slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        //table.add(slider);
         //table.add(new Label("tres long0 long1 long2 long3 long4 long5 long6 long7 long8 long9 long10 long11 long12", skin));
-
         final TextButton flickButton = new TextButton("Flick Scroll", skin.get("toggle", TextButtonStyle.class));
         flickButton.setChecked(true);
         flickButton.addListener(new ChangeListener() {
@@ -92,36 +99,23 @@ public class Inventory implements Screen {
             }
         });
 
-        final TextButton fadeButton = new TextButton("Fade Scrollbars", skin.get("toggle", TextButtonStyle.class));
-        fadeButton.setChecked(true);
-        fadeButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                scroll.setFadeScrollBars(fadeButton.isChecked());
-            }
-        });
-
         final TextButton smoothButton = new TextButton("Smooth Scrolling", skin.get("toggle", TextButtonStyle.class));
         smoothButton.setChecked(true);
-        smoothButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                scroll.setSmoothScrolling(smoothButton.isChecked());
-                System.out.println("6835421");
+        smoothButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("start game");
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
             }
         });
 
-        final TextButton onTopButton = new TextButton("Scrollbars On Top", skin.get("toggle", TextButtonStyle.class));
-        onTopButton.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                scroll.setScrollbarsOnTop(onTopButton.isChecked());
-            }
-        });
-
-        container.add(scroll).expand().fill().colspan(4);
-        container.row().space(10).padBottom(10);
-        container.add(flickButton).right().expandX();
-        container.add(onTopButton);
         stage.addActor(smoothButton);
-        container.add(fadeButton).left().expandX();
+
     }
 
     public void render(float f) {
@@ -133,7 +127,7 @@ public class Inventory implements Screen {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
 
-		// Gdx.gl.glViewport(100, 100, width - 200, height - 200);
+        // Gdx.gl.glViewport(100, 100, width - 200, height - 200);
         // stage.setViewport(800, 600, false, 100, 100, width - 200, height - 200);
     }
 

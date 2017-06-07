@@ -3,6 +3,8 @@
  * This is the tool class, it extends the Item class*/
 package com.surviveandthrive;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
 /**
  *
  * @author Brandon
@@ -13,8 +15,8 @@ public class Tools extends Item{
      * @param n the name of the tool
      * @param a the amount of the tools 
      */
-    public Tools(String n, int a){
-        super(n, a, false);
+    public Tools(String n, int a, Skin s){
+        super(n, a, false, s);
     }
     
 }
