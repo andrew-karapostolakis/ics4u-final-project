@@ -34,6 +34,7 @@ public class Inventory implements Screen {
     private Table container;
     private TextureAtlas atlas;
     private ItemSlot[][] items = new ItemSlot[10][10];
+    private Item tempStorage;
 
     public void show() {
         stage = new Stage();
@@ -57,7 +58,15 @@ public class Inventory implements Screen {
                 items[x][y].addListener(new InventoryListener(x, y) {
                     @Override
                     public boolean touchDown(InputEvent event, float xPos, float yPos, int pointer, int button) {
-                        System.out.println(items[x][y].getXButton());
+                        if (items[x][y] == null && tempStorage == null) {
+                            tempStorage = items[x][y].storedItem;
+                        }else if (items[x][y] == null && tempStorage != null){
+                            items[x][y].storedItem = tempStorage;
+                        }else if(items[x][y] != null && tempStorage != null){
+                            Item temp = tempStorage;
+                            tempStorage = items[x][y].storedItem;
+                            items[x][y].storedItem = temp;
+                        }
                         return true;
                     }
                 });

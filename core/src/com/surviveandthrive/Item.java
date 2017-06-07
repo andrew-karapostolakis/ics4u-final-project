@@ -22,11 +22,10 @@ public abstract class Item {
      * @param a the amount of that item
      * @param isE is Edible or not
      */
-    public Item(String n, int a, boolean isE, Skin s) {
+    public Item(String n, int a, boolean isE) {
         name = n;
         amount = a;
         isEdible = isE;
-        image = s;
     }
 
     /**

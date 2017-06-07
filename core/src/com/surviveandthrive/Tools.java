@@ -16,7 +16,7 @@ public class Tools extends Item{
      * @param a the amount of the tools 
      */
     public Tools(String n, int a, Skin s){
-        super(n, a, false, s);
+        super(n, a, false);
     }
     
 }

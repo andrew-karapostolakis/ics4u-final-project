@@ -21,7 +21,7 @@ public class Food extends Item {
      * @param f the food value of the food
      */
     public Food(String n, int a, boolean isE, int f, Skin s) {
-        super(n, a, isE, s);
+        super(n, a, isE);
         foodValue = f;
     }
 

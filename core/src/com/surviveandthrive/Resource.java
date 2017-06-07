@@ -19,8 +19,8 @@ public class Resource extends Item {
      * @param a the amount of resources
      * @param r the recipe for the resource
      */
-    public Resource(String n, int a, String r, Skin s) {
-        super(n, a, false, s);
+    public Resource(String n, int a, String r) {
+        super(n, a, false);
         recipe = r;
     }
 
