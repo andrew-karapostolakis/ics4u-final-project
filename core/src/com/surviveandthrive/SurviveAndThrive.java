@@ -32,8 +32,8 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     TiledMapTileLayer trees;
     int playerX, playerY, tileWidth, tileHeight;
     TiledMapTileLayer layer;
-    Cell cell;
-    TiledMapTile tile;
+    Cell cell, otherCell;
+    TiledMapTile tile, otherTile;
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -77,37 +77,46 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         //System.out.println(playerX + ", " + playerY);
         cell = layer.getCell(playerX, playerY);
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-                if(cell != null){
-                    tile = cell.getTile();
-                    if(!tile.getProperties().containsKey("water")){
-                        cam.translate(-4,0);
-                        testPlayer.translateX(-4);
-                    }
+            otherCell = layer.getCell(playerX - 1, playerY);
+            
+            if(cell != null){
+                otherTile = otherCell.getTile();
+                tile = cell.getTile();
+                if(!tile.getProperties().containsKey("water") || !otherTile.getProperties().containsKey("water")){
+                    cam.translate(-4,0);
+                    testPlayer.translateX(-4);
                 }
+            }
             
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            otherCell = layer.getCell(playerX + 1, playerY);
             if(cell != null){
+                otherTile = otherCell.getTile();
                 tile = cell.getTile();
-                if(!tile.getProperties().containsKey("water")){
+                if(!tile.getProperties().containsKey("water") || !otherTile.getProperties().containsKey("water")){
                     cam.translate(4,0);
                     testPlayer.translateX(4);
                 }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            otherCell = layer.getCell(playerX, playerY - 1);
             if(cell != null){
+                otherTile = otherCell.getTile();
                 tile = cell.getTile();
-                if(!tile.getProperties().containsKey("water")){
+                if(!tile.getProperties().containsKey("water") || !otherTile.getProperties().containsKey("water")){
                     cam.translate(0,-4);
                     testPlayer.translateY(-4);
                 }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+            otherCell = layer.getCell(playerX, playerY + 1);
             if(cell != null){
+                otherTile = otherCell.getTile();
                 tile = cell.getTile();
-                if(!tile.getProperties().containsKey("water")){
+                if(!tile.getProperties().containsKey("water") || !otherTile.getProperties().containsKey("water")){
                     cam.translate(0,4);
                     testPlayer.translateY(4);
                 }
