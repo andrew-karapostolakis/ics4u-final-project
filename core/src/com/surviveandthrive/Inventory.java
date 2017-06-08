@@ -33,14 +33,79 @@ public class Inventory implements Screen {
     private Stage stage;
     private Table container;
     private TextureAtlas atlas;
-    private ItemSlot[][] items = new ItemSlot[10][10];
-    private Item tempStorage;
+    private ItemSlot[][] items = new ItemSlot[5][8];
+    private Item tempStorage = null;
+    Skin skin;
 
-    public void show() {
+    public Inventory(Item[][] oldInv) {
         stage = new Stage();
         //atlas = new TextureAtlas("uiskin.json");
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
+
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 8; y++) {
+                items[x][y] = new ItemSlot("", skin.get("default", TextButtonStyle.class), x, y);
+                items[x][y].setPosition(20 + (y * 50), 300 + (x * 50));
+                items[x][y].setSize(50, 50);
+
+                items[x][y].addListener(new InventoryListener(x, y) {
+                    @Override
+                    public boolean touchDown(InputEvent event, float xPos, float yPos, int pointer, int button) {
+                        System.out.println(x + " : " + y);
+                        System.out.println(tempStorage);
+                        if (items[x][y].getStoredItem() != null && tempStorage == null) {
+                            tempStorage = items[x][y].getStoredItem();
+                            System.out.println("name of stored item: " + tempStorage.getName());
+                            items[x][y].setStored(null);
+                            items[x][y].setText("");
+
+                        } else if (items[x][y].getStoredItem() == null && tempStorage != null) {
+                            items[x][y].setStored(tempStorage);
+                            items[x][y].setText(tempStorage.getName());
+                            tempStorage = null;
+                            System.out.println("just stored: " + items[x][y].getName());
+                            System.out.println("placed: " + items[x][y].getItemName());
+
+                        } else if (items[x][y].getStoredItem() != null && tempStorage != null) {
+                            Item temp = tempStorage;
+                            tempStorage = items[x][y].getStoredItem();
+                            items[x][y].setStored(temp);
+                            items[x][y].setText(temp.getName());
+
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                    }
+                });
+                
+                if (oldInv[x][y] != null) {
+                        items[x][y].setStored(oldInv[x][y]);
+                        items[x][y].setText(oldInv[x][y].getName());
+                    }
+                
+                
+                stage.addActor(items[x][y]);
+            }
+            /*for (int k = 0; k < 5; k++) {
+                for (int l = 0; l < 8; l++) {
+                    System.out.println(oldInv[k][l].getName());
+                    if (oldInv[k][l] != null) {
+                        items[k][l].setStored(oldInv[k][l]);
+                        items[k][l].setText(oldInv[k][l].getName());
+                    }
+                }
+            }
+                    */
+            
+        }
+    }
+
+    public void show() {
 
         // Gdx.graphics.setVSync(false);
         container = new Table();
@@ -50,33 +115,10 @@ public class Inventory implements Screen {
         Table table = new Table();
         // table.debug();
 
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 8; y++) {
-                items[x][y] = new ItemSlot("" + x, skin.get("toggle", TextButtonStyle.class), x, y);
-                items[x][y].setPosition(20 + (y * 50), 300 + (x * 50));
-                items[x][y].setSize(50, 50);
-                items[x][y].addListener(new InventoryListener(x, y) {
-                    @Override
-                    public boolean touchDown(InputEvent event, float xPos, float yPos, int pointer, int button) {
-                        if (items[x][y] == null && tempStorage == null) {
-                            tempStorage = items[x][y].storedItem;
-                        }else if (items[x][y] == null && tempStorage != null){
-                            items[x][y].storedItem = tempStorage;
-                        }else if(items[x][y] != null && tempStorage != null){
-                            Item temp = tempStorage;
-                            tempStorage = items[x][y].storedItem;
-                            items[x][y].storedItem = temp;
-                        }
-                        return true;
-                    }
-                });
-                stage.addActor(items[x][y]);
-            }
-        }
-
         final ScrollPane scroll = new ScrollPane(table, skin);
 
         InputListener stopTouchDown = new InputListener() {
+            @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 event.stop();
                 return false;

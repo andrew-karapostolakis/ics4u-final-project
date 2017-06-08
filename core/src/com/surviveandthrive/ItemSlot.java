@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class ItemSlot extends TextButton{
     
-    Item storedItem;
-    int x, y;
+    private Item storedItem = null;
+    private int x, y;
 
     public ItemSlot(String s, TextButtonStyle st, int xPos, int yPos){
         super(s, st);
@@ -34,5 +34,11 @@ public class ItemSlot extends TextButton{
         return y;
     }
     
+    public void setStored(Item i){
+        storedItem = i;
+    }
     
+    public Item getStoredItem(){
+        return storedItem;
+    }
 }
