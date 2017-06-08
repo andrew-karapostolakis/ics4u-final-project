@@ -34,7 +34,7 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		testPlayer = new Player("Jeff");
+		testPlayer = new Player("Geoff");
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		//set up the map and camera

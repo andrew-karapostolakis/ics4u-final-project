@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Interactable extends RectangleMapObject {
     //attribute declaration
     //private String name;
-    private Rectangle mapObject;
+    //private Rectangle mapObject;
 	private MapProperties properties;
     /**
      * constructor for interactable items
