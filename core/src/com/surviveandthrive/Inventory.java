@@ -11,18 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  *
@@ -52,11 +52,11 @@ public class Inventory implements Screen {
                 items[x][y].addListener(new InventoryListener(x, y) {
                     @Override
                     public boolean touchDown(InputEvent event, float xPos, float yPos, int pointer, int button) {
-                        System.out.println(x + " : " + y);
-                        System.out.println(tempStorage);
+                        //System.out.println(x + " : " + y);
+                        //System.out.println(tempStorage);
                         if (items[x][y].getStoredItem() != null && tempStorage == null) {
                             tempStorage = items[x][y].getStoredItem();
-                            System.out.println("name of stored item: " + tempStorage.getName());
+                            //System.out.println("name of stored item: " + tempStorage.getName());
                             items[x][y].setStored(null);
                             items[x][y].setText("");
 
@@ -64,8 +64,8 @@ public class Inventory implements Screen {
                             items[x][y].setStored(tempStorage);
                             items[x][y].setText(tempStorage.getName());
                             tempStorage = null;
-                            System.out.println("just stored: " + items[x][y].getName());
-                            System.out.println("placed: " + items[x][y].getItemName());
+                           //System.out.println("just stored: " + items[x][y].getName());
+                            //System.out.println("placed: " + items[x][y].getItemName());
 
                         } else if (items[x][y].getStoredItem() != null && tempStorage != null) {
                             Item temp = tempStorage;
@@ -76,33 +76,45 @@ public class Inventory implements Screen {
                         }
                         return true;
                     }
-
-                    @Override
-                    public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-                    }
                 });
                 
                 if (oldInv[x][y] != null) {
                         items[x][y].setStored(oldInv[x][y]);
                         items[x][y].setText(oldInv[x][y].getName());
                     }
-                
-                
+
                 stage.addActor(items[x][y]);
-            }
-            /*for (int k = 0; k < 5; k++) {
-                for (int l = 0; l < 8; l++) {
-                    System.out.println(oldInv[k][l].getName());
-                    if (oldInv[k][l] != null) {
-                        items[k][l].setStored(oldInv[k][l]);
-                        items[k][l].setText(oldInv[k][l].getName());
-                    }
-                }
-            }
-                    */
-            
+            }            
         }
+        
+        TextButton exit = new TextButton("Exit", skin.get("default", TextButtonStyle.class));
+        exit.setX(550);
+        exit.setY(50);
+        exit.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
+        
+        TextButton craft = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        craft.setX(500);
+        craft.setY(50);
+        craft.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
+        
+        
+        
+        
+        
+        stage.addActor(craft);
+        stage.addActor(exit); 
     }
 
     public void show() {
@@ -152,9 +164,9 @@ public class Inventory implements Screen {
 
         final TextButton smoothButton = new TextButton("Smooth Scrolling", skin.get("toggle", TextButtonStyle.class));
         smoothButton.setChecked(true);
-        smoothButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+        smoothButton.addListener(new ClickListener() {
+            
+            public boolean clicked(ClickListener event, float x, float y) {
                 System.out.println("start game");
                 return true;
             }
@@ -166,6 +178,7 @@ public class Inventory implements Screen {
         });
 
         stage.addActor(smoothButton);
+        stage.act();
 
     }
 
@@ -201,4 +214,5 @@ public class Inventory implements Screen {
     @Override
     public void hide() {
     }
+
 }

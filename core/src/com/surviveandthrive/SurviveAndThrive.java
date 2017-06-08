@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -80,5 +83,26 @@ public class SurviveAndThrive extends Game {
          car.dispose();
          img.dispose();
          */
+    }
+    
+        
+    public void readInRecipies(){
+        try{
+            FileReader fr = new FileReader("src\\ItemRecipes");
+            BufferedReader br = new BufferedReader(fr);
+            
+            //Format for new Items:
+            //Name
+            //Special attributes to the item
+            //Item 1 to craft
+            //amount of Item 1
+            //Item 2 to craft
+            //amount of Item 2
+            //etc. will continue until program reads in:
+            //End
+            
+        }catch(IOException e){
+            System.out.println(e);
+        }
     }
 }

@@ -5,8 +5,9 @@ package com.surviveandthrive;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class InventoryListener extends InputListener{
+public class InventoryListener extends ClickListener{
     
     int x;
     int y;
@@ -17,7 +18,6 @@ public class InventoryListener extends InputListener{
         y = yPos;
     }
     
-    @Override
             public boolean touchDown (InputEvent event, float xPos, float yPos, int pointer, int button)
             {                     
                 System.out.println(x + " : " + y);
