@@ -1,3 +1,6 @@
+/* A Karapostolakis, B Lit, G Smith
+ * 2017-06-08
+ * A basic survival RPG */
 package com.surviveandthrive;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -17,6 +20,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurviveAndThrive extends Game implements InputProcessor, ApplicationListener {
 
@@ -43,10 +48,22 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 		map = new TmxMapLoader().load("takethree.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map, 4 / 1f);
 		Gdx.input.setInputProcessor(this);
+		//load object layer from tilemap
 		objects = map.getLayers().get("Object Layer 1").getObjects();
-		Rectangle tree = ((RectangleMapObject)objects.get("DeadTree1")).getRectangle();
-		System.out.println("Tree X: " + tree.getX());
-		System.out.println("Tree Y: " + tree.getY());
+		//store all trees and rocks in lists
+		List<Interactable> trees = new ArrayList<>();
+		List<Interactable> rocks = new ArrayList<>();
+		//loop through all mapobjects, add to respective lists
+		for (int i = 0; i < objects.getCount(); i++) {
+			RectangleMapObject obj = (RectangleMapObject) objects.get(i);
+			if (obj.getName().equals("Tree")) {
+				//add to trees
+				trees.add(new Interactable(obj));
+			} else if (obj.getName().equals("Rock")) {
+				//adds to rocks
+				rocks.add(new Interactable(obj));
+			}
+		}
 	}
 
 	@Override
@@ -64,10 +81,8 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 		//these if statements check to see if the arrow keys are being pressed
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			if (true) {
-				cam.translate(-4, 0);
-				testPlayer.translateX(-4);
-			}
+			cam.translate(-4, 0);
+			testPlayer.translateX(-4);
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			cam.translate(4, 0);
