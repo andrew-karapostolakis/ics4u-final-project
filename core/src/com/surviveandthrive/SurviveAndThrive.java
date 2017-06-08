@@ -30,7 +30,7 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     OrthographicCamera cam;
     TiledMapRenderer mapRenderer;
     TiledMapTileLayer trees;
-    int playerX, playerY;
+    int playerX, playerY, tileWidth, tileHeight;
     TiledMapTileLayer layer;
     Cell cell;
     TiledMapTile tile;
@@ -49,7 +49,9 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         testPlayer.setSize(48,88);
         testPlayer.setPosition(5276,5256);
         cam.translate(5000,5000);
-
+        layer = (TiledMapTileLayer)map.getLayers().get("Tile Layer 1");
+        tileWidth = (int)layer.getTileWidth();
+        tileHeight = (int)layer.getTileHeight();
     }
 
     @Override
@@ -70,12 +72,11 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         //draw the foreground
         mapRenderer.render(foregroundLayers);
         //these if statements check to see if the arrow keys are being pressed
-        playerX = (int)testPlayer.getX()/60;
-        playerY = (int)testPlayer.getY()/60;
-        System.out.println(playerX + ", " + playerY);
-        layer = (TiledMapTileLayer)map.getLayers().get("Tile Layer 1");
+        playerX = (int)testPlayer.getX()/tileWidth/4;
+        playerY = (int)testPlayer.getY()/tileHeight/4;
+        //System.out.println(playerX + ", " + playerY);
+        cell = layer.getCell(playerX, playerY);
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            cell = layer.getCell(playerX + 52, playerY);
                 if(cell != null){
                     tile = cell.getTile();
                     if(!tile.getProperties().containsKey("water")){
@@ -86,16 +87,31 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
             
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            cam.translate(4,0);
-            testPlayer.translateX(4);
+            if(cell != null){
+                tile = cell.getTile();
+                if(!tile.getProperties().containsKey("water")){
+                    cam.translate(4,0);
+                    testPlayer.translateX(4);
+                }
+            }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            cam.translate(0,-4);
-            testPlayer.translateY(-4);
+            if(cell != null){
+                tile = cell.getTile();
+                if(!tile.getProperties().containsKey("water")){
+                    cam.translate(0,-4);
+                    testPlayer.translateY(-4);
+                }
+            }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            cam.translate(0,4);
-            testPlayer.translateY(4);
+            if(cell != null){
+                tile = cell.getTile();
+                if(!tile.getProperties().containsKey("water")){
+                    cam.translate(0,4);
+                    testPlayer.translateY(4);
+                }
+            }
         }
         
     }

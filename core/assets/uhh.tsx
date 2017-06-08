@@ -26,6 +26,9 @@
   </objectgroup>
  </tile>
  <tile id="86">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -34,6 +37,9 @@
   </objectgroup>
  </tile>
  <tile id="87">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -42,6 +48,9 @@
   </objectgroup>
  </tile>
  <tile id="94">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -50,6 +59,9 @@
   </objectgroup>
  </tile>
  <tile id="95">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -58,6 +70,9 @@
   </objectgroup>
  </tile>
  <tile id="96">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -66,6 +81,9 @@
   </objectgroup>
  </tile>
  <tile id="97">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -74,6 +92,9 @@
   </objectgroup>
  </tile>
  <tile id="98">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -82,6 +103,9 @@
   </objectgroup>
  </tile>
  <tile id="105">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -90,6 +114,9 @@
   </objectgroup>
  </tile>
  <tile id="106">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -98,6 +125,9 @@
   </objectgroup>
  </tile>
  <tile id="107">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -106,6 +136,9 @@
   </objectgroup>
  </tile>
  <tile id="108">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -114,6 +147,9 @@
   </objectgroup>
  </tile>
  <tile id="116">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -122,6 +158,9 @@
   </objectgroup>
  </tile>
  <tile id="117">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -130,6 +169,9 @@
   </objectgroup>
  </tile>
  <tile id="118">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
@@ -138,6 +180,9 @@
   </objectgroup>
  </tile>
  <tile id="119">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="water" type="bool" value="true"/>
