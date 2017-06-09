@@ -21,6 +21,7 @@ public class SurviveAndThrive extends Game {
     Texture car;
     Rectangle test = new Rectangle();
     Sprite sprite;
+    String itemType, craft1, craft2;
 
     @Override
     public void create() {
@@ -86,12 +87,13 @@ public class SurviveAndThrive extends Game {
     }
     
         
-    public void readInRecipies(){
+    public void readInItems(){
         try{
             FileReader fr = new FileReader("src\\ItemRecipes");
             BufferedReader br = new BufferedReader(fr);
             
             //Format for new Items:
+            //Type of Item
             //Name
             //Special attributes to the item
             //Item 1 to craft
@@ -100,6 +102,8 @@ public class SurviveAndThrive extends Game {
             //amount of Item 2
             //etc. will continue until program reads in:
             //End
+            
+            itemType = br.readLine();
             
         }catch(IOException e){
             System.out.println(e);

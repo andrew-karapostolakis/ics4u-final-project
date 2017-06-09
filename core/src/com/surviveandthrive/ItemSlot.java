@@ -3,42 +3,43 @@
  * This is a class to manage the inventory*/
 package com.surviveandthrive;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
-public class ItemSlot extends TextButton{
-    
+public class ItemSlot extends ImageTextButton {
+
     private Item storedItem = null;
     private int x, y;
 
-    public ItemSlot(String s, TextButtonStyle st, int xPos, int yPos){
-        super(s, st);
+    public ItemSlot(String s, Skin sk, int xPos, int yPos) {
+        super(s, sk);
         x = xPos;
         y = yPos;
-        
+
     }
-    
-    public Skin getItemImage(){
+
+    public Skin getItemImage() {
         return storedItem.getImage();
     }
-    
-    public String getItemName(){
+
+    public String getItemName() {
         return storedItem.getName();
     }
-    
-    public int getXButton(){
+
+    public int getXButton() {
         return x;
     }
-    
-    public int getYButton(){
+
+    public int getYButton() {
         return y;
     }
-    
-    public void setStored(Item i){
+
+    public void setStored(Item i) {
         storedItem = i;
     }
-    
-    public Item getStoredItem(){
+
+    public Item getStoredItem() {
         return storedItem;
     }
 }

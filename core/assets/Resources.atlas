@@ -1,0 +1,27 @@
+
+Resources.png
+size: 2048,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Hay
+  rotate: false
+  xy: 2, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+Log
+  rotate: false
+  xy: 806, 186
+  size: 268, 216
+  orig: 268, 216
+  offset: 0, 0
+  index: -1
+Stone
+  rotate: false
+  xy: 404, 82
+  size: 400, 320
+  orig: 400, 320
+  offset: 0, 0
+  index: -1

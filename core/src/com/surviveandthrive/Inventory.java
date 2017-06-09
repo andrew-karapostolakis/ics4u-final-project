@@ -6,6 +6,8 @@ package com.surviveandthrive;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,9 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  *
@@ -35,7 +34,9 @@ public class Inventory implements Screen {
     private TextureAtlas atlas;
     private ItemSlot[][] items = new ItemSlot[5][8];
     private Item tempStorage = null;
-    Skin skin;
+    private Skin skin;
+    private SpriteBatch batch;
+    private Texture texture;
 
     public Inventory(Item[][] oldInv) {
         stage = new Stage();
@@ -43,9 +44,12 @@ public class Inventory implements Screen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
+        texture = new Texture(Gdx.files.internal("Log.png"));
+        batch = new SpriteBatch();
+
         for (int x = 0; x < 5; x++) {
             for (int y = 0; y < 8; y++) {
-                items[x][y] = new ItemSlot("", skin.get("default", TextButtonStyle.class), x, y);
+                items[x][y] = new ItemSlot("", skin, x, y);
                 items[x][y].setPosition(20 + (y * 50), 300 + (x * 50));
                 items[x][y].setSize(50, 50);
 
@@ -64,7 +68,7 @@ public class Inventory implements Screen {
                             items[x][y].setStored(tempStorage);
                             items[x][y].setText(tempStorage.getName());
                             tempStorage = null;
-                           //System.out.println("just stored: " + items[x][y].getName());
+                            //System.out.println("just stored: " + items[x][y].getName());
                             //System.out.println("placed: " + items[x][y].getItemName());
 
                         } else if (items[x][y].getStoredItem() != null && tempStorage != null) {
@@ -77,16 +81,16 @@ public class Inventory implements Screen {
                         return true;
                     }
                 });
-                
+
                 if (oldInv[x][y] != null) {
-                        items[x][y].setStored(oldInv[x][y]);
-                        items[x][y].setText(oldInv[x][y].getName());
-                    }
+                    items[x][y].setStored(oldInv[x][y]);
+                    items[x][y].setText(oldInv[x][y].getName());
+                }
 
                 stage.addActor(items[x][y]);
-            }            
+            }
         }
-        
+
         TextButton exit = new TextButton("Exit", skin.get("default", TextButtonStyle.class));
         exit.setX(550);
         exit.setY(50);
@@ -97,7 +101,7 @@ public class Inventory implements Screen {
                 return false;
             }
         });
-        
+
         TextButton craft = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
         craft.setX(500);
         craft.setY(50);
@@ -108,13 +112,9 @@ public class Inventory implements Screen {
                 return false;
             }
         });
-        
-        
-        
-        
-        
+
         stage.addActor(craft);
-        stage.addActor(exit); 
+        stage.addActor(exit);
     }
 
     public void show() {
@@ -165,7 +165,7 @@ public class Inventory implements Screen {
         final TextButton smoothButton = new TextButton("Smooth Scrolling", skin.get("toggle", TextButtonStyle.class));
         smoothButton.setChecked(true);
         smoothButton.addListener(new ClickListener() {
-            
+
             public boolean clicked(ClickListener event, float x, float y) {
                 System.out.println("start game");
                 return true;
@@ -184,6 +184,11 @@ public class Inventory implements Screen {
 
     public void render(float f) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(texture, 300, 300);
+        batch.end();
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
