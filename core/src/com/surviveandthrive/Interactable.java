@@ -1,12 +1,10 @@
 /* Garrett Smith, A Karapostolakis
- * May 29 2017
+ * 2017-06-09
  * This class will handle all of the items that can be interacted with in the world */
 package com.surviveandthrive;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.math.Rectangle;
 
 public class Interactable extends RectangleMapObject {
 	//attribute declaration
@@ -14,6 +12,7 @@ public class Interactable extends RectangleMapObject {
 	//private Rectangle mapObject;
 
 	private MapProperties properties;
+	private int resourcesRemaining;
 
 	/**
 	 * Constructor for interactable items.
@@ -24,6 +23,8 @@ public class Interactable extends RectangleMapObject {
 	public Interactable(RectangleMapObject obj) {
 		//name = nName;
 		super();
+		//each resource can be extracted 5 times
+		resourcesRemaining = 5;
 		properties = obj.getProperties();
 	}
 	/**

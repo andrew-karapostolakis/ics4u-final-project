@@ -1,5 +1,5 @@
 /* A Karapostolakis
- * 2017-06-02
+ * 2017-06-09
  * Class to store the player's attributes */
 package com.surviveandthrive;
 
@@ -8,16 +8,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Player extends Sprite {
 
-	private String name;
 	private int health;
-	//private Item[] inventory;
+	//private Item[][] inventory;
 	//TODO: integrate with items once done
 	private int score;
 	private int food;
 
-	public Player(String name) {
+	public Player() {
 		super(new Texture("playerTemp.png"));
-		this.name = name;
 		super.setPosition(0, 0);
 		//TODO: set player image
 		health = 100;
@@ -25,38 +23,19 @@ public class Player extends Sprite {
 		food = 75;
 	}
 
-	public Player(String name, int health) {
-		this(name);
+	public Player(int health) {
 		//check that health is within acceptable bounds
 		if (health >= 0 && health <= 100) {
 			this.health = health;
 		}
 	}
 
-	public Player(String name, int health, int food) {
-		this(name, health);
+	public Player(int health, int food) {
+		this(health);
 		//check that food is within acceptable bounds
 		if (food >= 0 && food <= 100) {
 			this.food = food;
 		}
-	}
-
-	/**
-	 * Accessor for the Player's name.
-	 *
-	 * @return The Player's name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Mutator for the Player's name.
-	 *
-	 * @param name The Player's new name
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**
@@ -142,7 +121,18 @@ public class Player extends Sprite {
 	 *
 	 * @return The Player's current inventory
 	 */
-	/*public Item[] getInventory() {
+	/*public Item[][] getInventory() {
 		return inventory;
 	}*/
+	
+	/**
+	 * Adds the specified type of item to inventory.
+	 *
+	 * @param itemName The type of item to be added
+	 * @return Whether the inventory addition succeeded
+	 */
+	public boolean addToInventory(String itemName) {
+		//TODO
+		return false;
+	}
 }

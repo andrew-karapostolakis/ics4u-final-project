@@ -1,5 +1,5 @@
 /* A Karapostolakis, B Lit, G Smith
- * 2017-06-08
+ * 2017-06-09
  * A basic survival RPG */
 package com.surviveandthrive;
 
@@ -35,11 +35,13 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 	OrthographicCamera cam;
 	TiledMapRenderer mapRenderer;
 	MapObjects objects;
+	List<Interactable> trees;
+	List<Interactable> rocks;
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		testPlayer = new Player("Geoff");
+		testPlayer = new Player();
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		//set up the map and camera
@@ -51,8 +53,8 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 		//load object layer from tilemap
 		objects = map.getLayers().get("Object Layer 1").getObjects();
 		//store all trees and rocks in lists
-		List<Interactable> trees = new ArrayList<>();
-		List<Interactable> rocks = new ArrayList<>();
+		trees = new ArrayList<>();
+		rocks = new ArrayList<>();
 		//loop through all mapobjects, add to respective lists
 		for (int i = 0; i < objects.getCount(); i++) {
 			RectangleMapObject obj = (RectangleMapObject) objects.get(i);
@@ -60,7 +62,7 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 				//add to trees
 				trees.add(new Interactable(obj));
 			} else if (obj.getName().equals("Rock")) {
-				//adds to rocks
+				//add to rocks
 				rocks.add(new Interactable(obj));
 			}
 		}
@@ -99,6 +101,49 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 
 	}
 
+	/**
+	 * Causes the player to interact with the nearest object.
+	 *
+	 * @return Whether the player interacted with anything
+	 */
+	public boolean interact() {
+		//check each rock
+		for (int i = 0; i < rocks.size(); i++) {
+			//check whether distance is less than 20 pixels in either direction
+			if (distance(testPlayer, rocks.get(i).getRectangle()) <= 20) {
+				//TODO: interact with object
+				return true;
+			}
+		}
+
+		//check each tree
+		for (int i = 0; i < trees.size(); i++) {
+			//check whether distance is less than 20 pixels in either direction
+			if (distance(testPlayer, trees.get(i).getRectangle()) <= 20) {
+				//TODO: interact with object
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Calculates the distance between a player and a rectangle.
+	 *
+	 * @param player The Player to check distance for
+	 * @param obj The Rectangle to check distance for
+	 * @return The largest orthogonal distance between the Player and the
+	 * Rectangle
+	 */
+	public int distance(Player player, Rectangle obj) {
+		int leftDist = (int) Math.abs(player.getX() - (obj.getX() + obj.getWidth()));
+		int rightDist = (int) Math.abs(obj.getX() - (player.getX() + player.getWidth()));
+		int bottomDist = (int) Math.abs(player.getY() - (obj.getY() + obj.getHeight()));
+		int topDist = (int) Math.abs(obj.getY() - (player.getY() + player.getHeight()));
+		//return largest separation
+		return Math.max(topDist, Math.max(bottomDist, Math.max(leftDist, rightDist)));
+	}
+
 	@Override
 	public void dispose() {
 		batch.dispose();
@@ -106,7 +151,11 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 
 	@Override
 	public boolean keyDown(int keycode) {
-
+		if (keycode == Input.Keys.SPACE) {
+			//interact with closest object
+			interact();
+			return true;
+		}
 		return false;
 	}
 
@@ -129,7 +178,6 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
 
 	@Override
 	public boolean keyTyped(char character) {
-
 		return false;
 	}
 
