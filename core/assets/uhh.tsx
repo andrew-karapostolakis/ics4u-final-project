@@ -2,6 +2,9 @@
 <tileset name="tileset" tilewidth="15" tileheight="15" spacing="2" margin="2" tilecount="121" columns="11">
  <image source="tileset.png" trans="ff00ff" width="188" height="188"/>
  <tile id="20">
+  <properties>
+   <property name="water" type="bool" value="true"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="isTree" type="bool" value="true"/>
@@ -10,6 +13,9 @@
   </objectgroup>
  </tile>
  <tile id="32">
+  <properties>
+   <property name="water" type="bool" value="true"/>
+  </properties>
   <objectgroup draworder="index">
    <properties>
     <property name="isTree" type="bool" value="true"/>
