@@ -17,11 +17,9 @@ public class Resource extends Item {
      * The constructor for the resource
      * @param n the name of the resource
      * @param a the amount of resources
-     * @param r the recipe for the resource
      */
-    public Resource(String n, int a, String r) {
+    public Resource(String n, int a) {
         super(n, a, false);
-        recipe = r;
     }
 
     /**

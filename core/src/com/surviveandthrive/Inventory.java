@@ -1,6 +1,6 @@
 /* Brandon Lit
  * 2017-06-03
- * This is the inventory class which will create eth screen that appears when the user wishes to access their inventory*/
+ * This is the inventory class which will create the screen that appears when the user wishes to access their inventory*/
 package com.surviveandthrive;
 
 import com.badlogic.gdx.Gdx;
@@ -83,8 +83,10 @@ public class Inventory implements Screen {
                 });
 
                 if (oldInv[x][y] != null) {
-                    items[x][y].setStored(oldInv[x][y]);
-                    items[x][y].setText(oldInv[x][y].getName());
+                    if (oldInv[x][y].getAmount() > 0) {
+                        items[x][y].setStored(oldInv[x][y]);
+                        items[x][y].setText(oldInv[x][y].getName());
+                    }
                 }
 
                 stage.addActor(items[x][y]);
@@ -102,10 +104,10 @@ public class Inventory implements Screen {
             }
         });
 
-        TextButton craft = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
-        craft.setX(500);
-        craft.setY(50);
-        craft.addListener(new InputListener() {
+        TextButton Crafting1 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        Crafting1.setX(25);
+        Crafting1.setY(200);
+        Crafting1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
@@ -113,7 +115,43 @@ public class Inventory implements Screen {
             }
         });
 
-        stage.addActor(craft);
+        TextButton Crafting2 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        Crafting2.setX(25);
+        Crafting2.setY(150);
+        Crafting2.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
+
+        TextButton Crafting3 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        Crafting3.setX(25);
+        Crafting3.setY(100);
+        Crafting3.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
+
+        TextButton Crafting4 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        Crafting4.setX(25);
+        Crafting4.setY(50);
+        Crafting4.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return false;
+            }
+        });
+
+        stage.addActor(Crafting1);
+        stage.addActor(Crafting2);
+        stage.addActor(Crafting3);
+        stage.addActor(Crafting4);
         stage.addActor(exit);
     }
 

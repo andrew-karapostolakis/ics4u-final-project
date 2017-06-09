@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class Food extends Item {
     //food value represents the amount of hunger the bar will replace
     private int foodValue;
+    private String recipe;
     
     /**
      * The constructor for food
@@ -20,9 +21,10 @@ public class Food extends Item {
      * @param isE is the food edible
      * @param f the food value of the food
      */
-    public Food(String n, int a, boolean isE, int f, Skin s) {
+    public Food(String n, int a, boolean isE, int f, String s) {
         super(n, a, isE);
         foodValue = f;
+        recipe = s;
     }
 
     /**
@@ -31,6 +33,14 @@ public class Food extends Item {
      */
     public int getFoodValue(){
         return foodValue;
+    }
+    
+    /**
+     * Return the recipe required to make the item
+     * @return String recipe
+     */
+    public String getRecipe(){
+        return recipe;
     }
 
 }

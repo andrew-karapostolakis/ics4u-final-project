@@ -16,33 +16,23 @@ END
 Food
 Petal Salad
 5
-Flower
-2
+Flower 2
 END
 Food
 Rabbit Stew
 20
-Rabbit
-1
+Rabbit 1
 END
 Tool
 Axe
-Wood
-2
-Stone
-2
+Wood 2 Stone 2
 END
 Tool
 Pickaxe
-Wood
-2
-Stone
-3
+Wood 2 Stone 3
 END
 Tool
 Sword
-Wood
-1
-Stone
-5
+Wood 1 Stone 5
 END
+DONE
