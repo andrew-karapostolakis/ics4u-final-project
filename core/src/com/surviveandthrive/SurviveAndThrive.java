@@ -2,17 +2,14 @@ package com.surviveandthrive;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 public class SurviveAndThrive extends Game {
 
@@ -55,7 +52,7 @@ public class SurviveAndThrive extends Game {
         testInv[2][6] = test5;
         testInv[3][7] = test6;
         */
-        //readInItems();
+        readInItems();
 
         this.setScreen(new Inventory(items));
     }
@@ -91,10 +88,12 @@ public class SurviveAndThrive extends Game {
     }
 
     public void readInItems() {
-        try {
-            FileReader fr = new FileReader("ItemRecipe.txt");
-            BufferedReader br = new BufferedReader(fr);
-
+        //try {
+            //FileReader fr = new FileReader("ItemRecipe.txt");
+            //BufferedReader br = new BufferedReader(fr);
+            FileHandle itemsFile = Gdx.files.internal("ItemRecipes.txt");
+            String test = itemsFile.readString();
+            System.out.println(test);
             //Format for new Items:
             //Type of Item
             //Name
@@ -106,7 +105,7 @@ public class SurviveAndThrive extends Game {
             //etc. will continue until program reads in:
             //End
             //When the program reads DONE it means that there are no more items to read in
-            items = new Item[5][8];
+            /*items = new Item[5][8];
             for (int i = 0; i < 8; i++) {
                 itemType = br.readLine();
                 if(itemType.equals("DONE")){
@@ -126,9 +125,11 @@ public class SurviveAndThrive extends Game {
                     items[2][i] = new Tools(itemName, 0, recipe);
                 }
             }
-
-        } catch (IOException e) {
-            System.out.println(e);
-        }
+*/
+        //} catch (IOException e) {
+       //     System.out.println(e);
+        //}
+    
     }
+                    
 }
