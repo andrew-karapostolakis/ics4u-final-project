@@ -32,8 +32,8 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     TiledMapTileLayer trees;
     int playerX, playerY, tileWidth, tileHeight, tilePosX, tilePosY;
     TiledMapTileLayer layer;
-    Cell cell, aboveCell, belowCell, rightCell, leftCell;
-    TiledMapTile tile, aboveTile, belowTile, leftTile, rightTile;
+    Cell[][] cell = new Cell[3][3];
+    TiledMapTile[][] tile = new TiledMapTile[3][3];
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -77,47 +77,64 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         tilePosX = (int)testPlayer.getX() % 60 / 4;
         tilePosY = (int)testPlayer.getY() % 60 / 4;
         //System.out.println(tilePosX + ", " + tilePosY);
-        cell = layer.getCell(playerX, playerY);
-        aboveCell = layer.getCell(playerX, playerY + 1);
-        belowCell = layer.getCell(playerX, playerY - 1);
-        leftCell = layer.getCell(playerX - 1, playerY);
-        rightCell = layer.getCell(playerX + 1, playerY);
+        //cell the player is on
+        cell[1][1] = layer.getCell(playerX, playerY);
+        tile[1][1] = cell[1][1].getTile();
+        //above
+        cell[1][0] = layer.getCell(playerX, playerY + 1);
+        tile[1][0] = cell[1][0].getTile();
+        //below
+        cell[1][2] = layer.getCell(playerX, playerY - 1);
+        tile[1][2] = cell[1][2].getTile();
+        //left
+        cell[0][1] = layer.getCell(playerX - 1, playerY);
+        tile[0][1] = cell[0][1].getTile();
+        //right
+        cell[2][1] = layer.getCell(playerX + 1, playerY);
+        tile[2][1] = cell[2][1].getTile();
+        //top left
+        cell[0][0] = layer.getCell(playerX - 1, playerY + 1);
+        tile[0][0] = cell[0][0].getTile();
+        //top right
+        cell[2][0] = layer.getCell(playerX + 1, playerY + 1);
+        tile[2][0] = cell[2][0].getTile();
+        //bottom left
+        cell[0][2] = layer.getCell(playerX - 1, playerY - 1);
+        tile[0][2] = cell[0][2].getTile();
+        //bottom right
+        cell[2][2] = layer.getCell(playerX + 1, playerY - 1);
+        tile[2][2] = cell[2][2].getTile();
+        
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){            
-            if(leftCell != null){
-                leftTile = leftCell.getTile();
-                if(!(leftTile.getProperties().containsKey("water") && tilePosX <= 4)){
-                    cam.translate(-4,0);
-                    testPlayer.translateX(-4);
-                }
+            if(!(tile[0][1].getProperties().containsKey("water") && tilePosX <= 1)){
+                cam.translate(-4,0);
+                testPlayer.translateX(-4);
             }
             
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if(rightCell != null){
-                rightTile = rightCell.getTile();
-                if(!(rightTile.getProperties().containsKey("water") && tilePosX >= 4)){
-                    cam.translate(4,0);
-                    testPlayer.translateX(4);
-                }
+            if(!(tile[2][1].getProperties().containsKey("water") && (tilePosX + 11) <= 15)){
+                cam.translate(4,0);
+                testPlayer.translateX(4);
             }
+            
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            if(belowCell != null){
-                belowTile = belowCell.getTile();
-                if(!(belowTile.getProperties().containsKey("water") && tilePosY <= 4)){
+            if(!(tile[1][2].getProperties().containsKey("water") && tilePosY <= 1)){
+                if(!((tilePosX > 4 && tilePosY <= 1) && tile[2][2].getProperties().containsKey("water"))){
                     cam.translate(0,-4);
                     testPlayer.translateY(-4);
                 }
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            if(aboveCell != null){
-                aboveTile = aboveCell.getTile();
-                if(!(aboveTile.getProperties().containsKey("water") && tilePosY >= 12)){
+            if(!(tile[1][0].getProperties().containsKey("water") && tilePosY <= 12)){
+                if(!((tilePosX > 4 && tilePosY <= 12) && tile[2][0].getProperties().containsKey("water"))){
                     cam.translate(0,4);
                     testPlayer.translateY(4);
                 }
             }
+            
         }
         
     }

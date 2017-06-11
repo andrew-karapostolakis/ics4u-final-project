@@ -3,7 +3,8 @@
  <image source="tileset.png" trans="ff00ff" width="188" height="188"/>
  <tile id="20">
   <properties>
-   <property name="water" type="bool" value="true"/>
+   <property name="tree" type="bool" value="false"/>
+   <property name="water" type="bool" value="false"/>
   </properties>
   <objectgroup draworder="index">
    <properties>
@@ -14,7 +15,8 @@
  </tile>
  <tile id="32">
   <properties>
-   <property name="water" type="bool" value="true"/>
+   <property name="tree" type="bool" value="false"/>
+   <property name="water" type="bool" value="false"/>
   </properties>
   <objectgroup draworder="index">
    <properties>
