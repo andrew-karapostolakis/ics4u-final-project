@@ -21,6 +21,7 @@ public class SurviveAndThrive extends Game {
     String itemType, itemName, recipe;
     int foodValue;
     Item[][] items;
+    int readInIndex = 0;
 
     @Override
     public void create() {
@@ -36,24 +37,26 @@ public class SurviveAndThrive extends Game {
          test.y = 60;
          */
         /*
-        Resource test = new Resource("Wood", 5);
-        Resource test2 = new Resource("Rock", 3);
-        Resource test3 = new Resource("Sand", 10);
-        Resource test4 = new Resource("Grass", 6);
-        Resource test5 = new Resource("Sticks", 20);
-        Resource test6 = new Resource("Flower", 1);
+         Resource test = new Resource("Wood", 5);
+         Resource test2 = new Resource("Rock", 3);
+         Resource test3 = new Resource("Sand", 10);
+         Resource test4 = new Resource("Grass", 6);
+         Resource test5 = new Resource("Sticks", 20);
+         Resource test6 = new Resource("Flower", 1);
 
-        Item[][] testInv = new Item[5][8];
+         Item[][] testInv = new Item[5][8];
 
-        testInv[2][4] = test;
-        testInv[4][2] = test2;
-        testInv[0][0] = test3;
-        testInv[1][3] = test4;
-        testInv[2][6] = test5;
-        testInv[3][7] = test6;
-        */
+         testInv[2][4] = test;
+         testInv[4][2] = test2;
+         testInv[0][0] = test3;
+         testInv[1][3] = test4;
+         testInv[2][6] = test5;
+         testInv[3][7] = test6;
+         */
         readInItems();
-
+        
+        items[0][0].addItem(5);
+        
         this.setScreen(new Inventory(items));
     }
 
@@ -88,48 +91,66 @@ public class SurviveAndThrive extends Game {
     }
 
     public void readInItems() {
+        int ResourceIndex = 0;
+        int FoodIndex = 0;
+        int ToolIndex = 0;
         //try {
-            //FileReader fr = new FileReader("ItemRecipe.txt");
-            //BufferedReader br = new BufferedReader(fr);
-            FileHandle itemsFile = Gdx.files.internal("ItemRecipes.txt");
-            String test = itemsFile.readString();
-            System.out.println(test);
-            //Format for new Items:
-            //Type of Item
-            //Name
-            //Special attributes to the item
-            //Item 1 to craft
-            //amount of Item 1
-            //Item 2 to craft
-            //amount of Item 2
-            //etc. will continue until program reads in:
-            //End
-            //When the program reads DONE it means that there are no more items to read in
-            /*items = new Item[5][8];
-            for (int i = 0; i < 8; i++) {
-                itemType = br.readLine();
-                if(itemType.equals("DONE")){
-                    break;
-                }
-                if (itemType.equals("Resource")) {
-                    itemName = br.readLine();
-                    items[0][i] = new Resource(itemName, 0);
-                } else if (itemType.equals("Food")) {
-                    itemName = br.readLine();
-                    foodValue = Integer.parseInt(br.readLine());
-                    recipe = br.readLine();
-                    items[1][i] = new Food(itemName, 0, true, foodValue, recipe);
-                } else if (itemType.equals("Tool")) {
-                    itemName = br.readLine();
-                    recipe = br.readLine();
-                    items[2][i] = new Tools(itemName, 0, recipe);
-                }
+        //FileReader fr = new FileReader("ItemRecipe.txt");
+        //BufferedReader br = new BufferedReader(fr);
+        FileHandle itemsFile = Gdx.files.internal("ItemRecipes.txt");
+        String test = itemsFile.readString();
+        String itemData[] = test.split("\n");
+
+        //Format for new Items:
+        //Type  of Item
+        //Name
+        //Special attributes to the item
+        //Item 1 to craft
+        //amount of Item 1
+        //Item 2 to craft
+        //amount of Item 2
+        //etc. will continue until program reads in:
+        //End
+        //When the program reads DONE it means that there are no more items to read in
+        items = new Item[5][10];
+        
+        for (int i = 0; i < 10; i++) {
+            itemType = itemData[readInIndex].trim();
+            System.out.println(itemType);
+            readInIndex ++;
+            if (itemType.equals("DONE")) {
+                break;
             }
-*/
+            if (itemType.equals("Resource")) {
+                itemName = itemData[readInIndex].trim();;
+                System.out.println("test1");
+                readInIndex ++;
+                items[0][ResourceIndex] = new Resource(itemName, 0);
+                ResourceIndex ++;
+            } else if (itemType.equals("Food")) {
+                itemName = itemData[readInIndex].trim();;
+                System.out.println("test2");
+                readInIndex ++;
+                foodValue = Integer.parseInt(itemData[readInIndex].trim());
+                readInIndex ++;
+                recipe = itemData[readInIndex].trim();
+                readInIndex ++;
+                items[1][FoodIndex] = new Food(itemName, 0, true, foodValue, recipe);
+                FoodIndex ++;
+            } else if (itemType.equals("Tool")) {
+                itemName = itemData[readInIndex].trim();;
+                System.out.println("test3");
+                readInIndex ++;
+                recipe = itemData[readInIndex].trim();;
+                readInIndex ++;
+                items[2][ToolIndex] = new Tools(itemName, 0, recipe);
+                ToolIndex ++;
+            }
+        }
+
         //} catch (IOException e) {
-       //     System.out.println(e);
+        //     System.out.println(e);
         //}
-    
     }
-                    
+
 }

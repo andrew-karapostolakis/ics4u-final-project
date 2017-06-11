@@ -1,38 +1,28 @@
 Resource
 Stone
-END
 Resource
 Wood
-END
 Resource
 Grass
-END
 Resource
 Flower
-END
 Resource
 Rabbit
-END
 Food
-Petal Salad
+Petal_Salad
 5
-Flower 2
-END
+Flower_2
 Food
-Rabbit Stew
+Rabbit_Stew
 20
-Rabbit 1
-END
+Rabbit_1
 Tool
 Axe
-Wood 2 Stone 2
-END
+Wood_2_Stone 2
 Tool
 Pickaxe
-Wood 2 Stone 3
-END
+Wood_2_Stone 3
 Tool
 Sword
-Wood 1 Stone 5
-END
+Wood_1_Stone 5
 DONE

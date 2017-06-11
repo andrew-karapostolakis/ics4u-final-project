@@ -82,12 +82,12 @@ public class Inventory implements Screen {
                     }
                 });
 
-                //if (oldInv[x][y] != null) {
-                    //if (oldInv[x][y].getAmount() > 0) {
-                      //  items[x][y].setStored(oldInv[x][y]);
-                     //   items[x][y].setText(oldInv[x][y].getName());
-                   // }
-                //}
+                if (oldInv[x][y] != null) {
+                    if (oldInv[x][y].getAmount() > 0) {
+                        items[x][y].setStored(oldInv[x][y]);
+                        items[x][y].setText(oldInv[x][y].getAmount() + " " + oldInv[x][y].getName());
+                    }
+                }
 
                 stage.addActor(items[x][y]);
             }
