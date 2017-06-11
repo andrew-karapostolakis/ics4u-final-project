@@ -38,12 +38,12 @@ public class Inventory implements Screen {
     private SpriteBatch batch;
     private Texture texture;
 
-    public Inventory(Item[][] oldInv) {
+    public Inventory(final Item[][] oldInv) {
         stage = new Stage();
         //atlas = new TextureAtlas("uiskin.json");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
-
+        
         texture = new Texture(Gdx.files.internal("Log.png"));
         batch = new SpriteBatch();
 
@@ -104,9 +104,15 @@ public class Inventory implements Screen {
             }
         });
 
-        TextButton Crafting1 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        final Label craftItem1 = new Label("test", skin);
+        final Label craftItem2 = new Label("", skin);
+        final Label craftItem3 = new Label("", skin);
+        
+        craftItem1.setPosition(100, 50);
+        
+        final TextButton Crafting1 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
         Crafting1.setX(25);
-        Crafting1.setY(200);
+        Crafting1.setY(50);
         Crafting1.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -114,10 +120,11 @@ public class Inventory implements Screen {
                 return false;
             }
         });
-
-        TextButton Crafting2 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        
+        
+        final TextButton Crafting2 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
         Crafting2.setX(25);
-        Crafting2.setY(150);
+        Crafting2.setY(100);
         Crafting2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -126,9 +133,9 @@ public class Inventory implements Screen {
             }
         });
 
-        TextButton Crafting3 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
+        final TextButton Crafting3 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
         Crafting3.setX(25);
-        Crafting3.setY(100);
+        Crafting3.setY(150);
         Crafting3.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -136,22 +143,42 @@ public class Inventory implements Screen {
                 return false;
             }
         });
+        
+        TextButton foodMenu = new TextButton("Food", skin.get("default", TextButtonStyle.class));
+        foodMenu.setX(100);
+        foodMenu.setY(200);
+        foodMenu.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Crafting1.setVisible(true);
+                Crafting2.setVisible(true);
+                craftItem1.setText(oldInv[1][0].getName() + "\t" + ((Food) oldInv[1][0]).getRecipe().trim());
+                
+                return false;
+            }
+        });
 
-        TextButton Crafting4 = new TextButton("Craft", skin.get("default", TextButtonStyle.class));
-        Crafting4.setX(25);
-        Crafting4.setY(50);
-        Crafting4.addListener(new InputListener() {
+        TextButton toolMenu = new TextButton("Tools", skin.get("default", TextButtonStyle.class));
+        toolMenu.setX(200);
+        toolMenu.setY(200);
+        toolMenu.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
                 return false;
             }
         });
-
+        
+        stage.addActor(craftItem1);
+        stage.addActor(craftItem2);
+        stage.addActor(craftItem3);
+        
+        
+        stage.addActor(foodMenu);
+        stage.addActor(toolMenu);
         stage.addActor(Crafting1);
         stage.addActor(Crafting2);
         stage.addActor(Crafting3);
-        stage.addActor(Crafting4);
         stage.addActor(exit);
     }
 
