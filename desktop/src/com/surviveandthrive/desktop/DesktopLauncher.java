@@ -2,7 +2,7 @@ package com.surviveandthrive.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.surviveandthrive.SurviveAndThrive;
+import com.surviveandthrive.MainGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -10,6 +10,6 @@ public class DesktopLauncher {
                 config.title = "Survive And Thrive";
                 config.width = 600;
                 config.height = 600;        
-		new LwjglApplication(new SurviveAndThrive(), config);
+		new LwjglApplication(new MainGame(), config);
 	}
 }

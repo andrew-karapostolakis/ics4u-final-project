@@ -1,4 +1,5 @@
 package com.surviveandthrive;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,13 +18,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.files.FileHandle;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
-public class SurviveAndThrive extends Game implements InputProcessor, ApplicationListener{
+public class SurviveAndThrive implements InputProcessor, Screen {
+
     int[] backgroundLayers = {0};
     int[] foregroundLayers = {1};
     SpriteBatch batch;
@@ -43,29 +42,31 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     //arrays to hold the tiles surrounding the player
     Cell[][] cell = new Cell[3][3];
     TiledMapTile[][] tile = new TiledMapTile[3][3];
-    
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
-	testPlayer = new Player("Jeff");
+    MainGame game;
+
+    public SurviveAndThrive(MainGame g) {
+        game = g;
+        
+         batch = new SpriteBatch();
+        testPlayer = new Player("Jeff");
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         //set up the map and camera
         cam = new OrthographicCamera();
-        cam.setToOrtho(false,w,h);
+        cam.setToOrtho(false, w, h);
         map = new TmxMapLoader().load("takethree.tmx");
         //scale the map
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 4/1f);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 4 / 1f);
         Gdx.input.setInputProcessor(this);
         //set player size and position
-        testPlayer.setSize(48,70);
-        testPlayer.setPosition(5276,5256);
-        cam.translate(5000,5000);
+        testPlayer.setSize(48, 70);
+        testPlayer.setPosition(5276, 5256);
+        cam.translate(5000, 5000);
         //get some map properties for later
-        layer = (TiledMapTileLayer)map.getLayers().get("Tile Layer 1");
-        tileWidth = (int)layer.getTileWidth();
-        tileHeight = (int)layer.getTileHeight();
-    
+        layer = (TiledMapTileLayer) map.getLayers().get("Tile Layer 1");
+        tileWidth = (int) layer.getTileWidth();
+        tileHeight = (int) layer.getTileHeight();
+
         /*batch = new SpriteBatch();
          img = new Texture("badlogic.jpg");
          car = new Texture("car.png");
@@ -95,23 +96,23 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
          testInv[3][7] = test6;
          */
         readInItems();
-        
+
         items[0][0].addItem(6);
         items[0][1].addItem(6);
         items[0][3].addItem(2);
         items[0][4].addItem(2);
-        
-        this.setScreen(new Inventory(items));
+
+        //game.setScreen(new Inventory(items));
     }
 
+    
     @Override
-    public void render() {
-        super.render();
+    public void render(float f) {
+        //super.render();
 
-        
-         Gdx.gl.glClearColor(1, 0, 0, 1);
-         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-         //sprite.draw(batch);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //sprite.draw(batch);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -121,19 +122,19 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         batch.setProjectionMatrix(cam.combined);
         //draw the background
         mapRenderer.render(backgroundLayers);
-	batch.begin();
+        batch.begin();
         batch.enableBlending();
         //draw the player
         testPlayer.draw(batch);
-        
-	batch.end();
+
+        batch.end();
         //draw the foreground
         mapRenderer.render(foregroundLayers);
         //get player location, both on the map, and within the specific tile
-        playerX = (int)testPlayer.getX()/tileWidth/4;
-        playerY = (int)testPlayer.getY()/tileHeight/4;
-        tilePosX = (int)testPlayer.getX() % 60 / 4;
-        tilePosY = (int)testPlayer.getY() % 60 / 4;
+        playerX = (int) testPlayer.getX() / tileWidth / 4;
+        playerY = (int) testPlayer.getY() / tileHeight / 4;
+        tilePosX = (int) testPlayer.getX() % 60 / 4;
+        tilePosY = (int) testPlayer.getY() % 60 / 4;
         //cell the player is on
         cell[1][1] = layer.getCell(playerX, playerY);
         tile[1][1] = cell[1][1].getTile();
@@ -162,51 +163,55 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         cell[2][2] = layer.getCell(playerX + 1, playerY - 1);
         tile[2][2] = cell[2][2].getTile();
         //if statements get key input
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){   
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             //make sure the player isnt running into any water tiles
-            if(!(tile[0][1].getProperties().containsKey("water") && tilePosX <= 1)){
-                cam.translate(-4,0);
+            if (!(tile[0][1].getProperties().containsKey("water") && tilePosX <= 1)) {
+                cam.translate(-4, 0);
                 testPlayer.translateX(-4);
             }
-            
+
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             //make sure the player isnt running into any water tiles
-            if(!(tile[2][1].getProperties().containsKey("water") && (tilePosX + 11) <= 15)){
-                cam.translate(4,0);
+            if (!(tile[2][1].getProperties().containsKey("water") && (tilePosX + 11) <= 15)) {
+                cam.translate(4, 0);
                 testPlayer.translateX(4);
             }
-            
+
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             //make sure the player isnt running into any water tiles
-            if(!(tile[1][2].getProperties().containsKey("water") && tilePosY <= 1)){
+            if (!(tile[1][2].getProperties().containsKey("water") && tilePosY <= 1)) {
                 //check the tile next to the player as well so that they dont appear to be walking on water
-                if(!((tilePosX > 4 && tilePosY <= 1) && tile[2][2].getProperties().containsKey("water"))){
-                    cam.translate(0,-4);
+                if (!((tilePosX > 4 && tilePosY <= 1) && tile[2][2].getProperties().containsKey("water"))) {
+                    cam.translate(0, -4);
                     testPlayer.translateY(-4);
                 }
             }
         }
-        
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             //make sure the player isnt running into any water tiles
-            if(!(tile[1][0].getProperties().containsKey("water") && tilePosY <= 12)){
+            if (!(tile[1][0].getProperties().containsKey("water") && tilePosY <= 12)) {
                 //check the tile next to the player as well so that they dont appear to be walking on water
-                if(!((tilePosX > 4 && tilePosY <= 12) && tile[2][0].getProperties().containsKey("water"))){
-                    cam.translate(0,4);
+                if (!((tilePosX > 4 && tilePosY <= 12) && tile[2][0].getProperties().containsKey("water"))) {
+                    cam.translate(0, 4);
                     testPlayer.translateY(4);
                 }
             }
-            
+
         }
-        
-         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            game.setScreen(new Inventory(items, game, this));
+        }
+
+    }
 
     @Override
     public void dispose() {
         batch.dispose();
-         
+
     }
 
     public void readInItems() {
@@ -232,64 +237,62 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         //End
         //When the program reads DONE it means that there are no more items to read in
         items = new Item[5][10];
-        
+
         for (int i = 0; i < 10; i++) {
             itemType = itemData[readInIndex].trim();
-           
-            readInIndex ++;
+
+            readInIndex++;
             if (itemType.equals("DONE")) {
                 break;
             }
             if (itemType.equals("Resource")) {
                 itemName = itemData[readInIndex].trim();;
-                
-                readInIndex ++;
+
+                readInIndex++;
                 items[0][ResourceIndex] = new Resource(itemName, 0);
-                ResourceIndex ++;
+                ResourceIndex++;
             } else if (itemType.equals("Food")) {
                 itemName = itemData[readInIndex].trim();;
-                
-                readInIndex ++;
+
+                readInIndex++;
                 foodValue = Integer.parseInt(itemData[readInIndex].trim());
-                readInIndex ++;
+                readInIndex++;
                 recipe = itemData[readInIndex].trim();
-                readInIndex ++;
+                readInIndex++;
                 items[1][FoodIndex] = new Food(itemName, 0, true, foodValue, recipe);
-                FoodIndex ++;
+                FoodIndex++;
             } else if (itemType.equals("Tool")) {
                 itemName = itemData[readInIndex].trim();;
-               
-                readInIndex ++;
+
+                readInIndex++;
                 recipe = itemData[readInIndex].trim();;
-                readInIndex ++;
+                readInIndex++;
                 items[2][ToolIndex] = new Tools(itemName, 0, recipe);
-                ToolIndex ++;
+                ToolIndex++;
             }
         }
 
         //} catch (IOException e) {
         //     System.out.println(e);
         //}
-
         //this.setScreen(new MainMenu(this));
-        
-
     }
-    
+
     @Override
     public boolean keyDown(int keycode) {
-        
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        
+
         return false;
     }
-     @Override
+
+    @Override
     public boolean keyTyped(char character) {
-        
+
         return false;
     }
 
@@ -318,5 +321,26 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         return false;
     }
 
-}
+    @Override
+    public void resize(int i, int i1) {
+    }
 
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void show() {
+     }
+
+
+    @Override
+    public void hide() {
+    }
+
+
+}

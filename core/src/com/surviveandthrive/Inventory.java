@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -37,16 +39,19 @@ public class Inventory implements Screen {
     private Item tempStorage = null;
     private Skin skin;
     private SpriteBatch batch;
-    private Texture texture;
     private boolean food = false, tools = false;
+    private MainGame game;
+    private SurviveAndThrive world;
 
-    public Inventory(final Item[][] oldInv) {
+    public Inventory(final Item[][] oldInv, MainGame g, SurviveAndThrive w) {
         stage = new Stage();
+        game = g;
+        world = w;
         //atlas = new TextureAtlas("uiskin.json");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        texture = new Texture(Gdx.files.internal("Log.png"));
+        
         batch = new SpriteBatch();
 
         for (int x = 0; x < 4; x++) {
@@ -95,13 +100,15 @@ public class Inventory implements Screen {
             }
         }
 
-        TextButton exit = new TextButton("Exit", skin.get("default", TextButtonStyle.class));
-        exit.setX(550);
+        TextButton exit = new TextButton("Back to Game", skin.get("default", TextButtonStyle.class));
+        exit.setX(450);
         exit.setY(50);
         exit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
+                
+                game.setScreen(world);
+
                 return false;
             }
         });
@@ -454,21 +461,16 @@ public class Inventory implements Screen {
         //title.top();
         stage.addActor(screenTitle);
 
-        Slider slider = new Slider(0, 100, 1, false, skin);
-        slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-        stage.addActor(slider);
-
         stage.act();
 
     }
 
     public void render(float f) {
+        Gdx.gl.glClearColor(65f/255f, 138f/255f, 234f/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
 
-        batch.begin();
-        batch.draw(texture, 300, 300);
-        batch.end();
-
+        
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
