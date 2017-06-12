@@ -1,4 +1,8 @@
+/* A Karapostolakis, B Lit, G Smith
+ * 2017-06-09
+ * A basic survival RPG */
 package com.surviveandthrive;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -21,21 +27,26 @@ import com.badlogic.gdx.files.FileHandle;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SurviveAndThrive extends Game implements InputProcessor, ApplicationListener{
+public class SurviveAndThrive extends Game implements InputProcessor, ApplicationListener {
     int[] backgroundLayers = {0};
     int[] foregroundLayers = {1};
     SpriteBatch batch;
     Sprite sprite;
-    String itemType, itemName, recipe;
-    int foodValue;
-    Item[][] items;
-    int readInIndex = 0;
     Player testPlayer;
     Texture img;
     TiledMap map;
     OrthographicCamera cam;
     TiledMapRenderer mapRenderer;
+	MapObjects objects;
+	List<Interactable> treeObjects;
+	List<Interactable> rockObjects;
+    String itemType, itemName, recipe;
+    int foodValue;
+    Item[][] items;
+    int readInIndex = 0;
     TiledMapTileLayer trees;
     //player coordinates, tile size, and player location within the tile
     int playerX, playerY, tileWidth, tileHeight, tilePosX, tilePosY;
@@ -47,7 +58,7 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     @Override
     public void create() {
         batch = new SpriteBatch();
-	testPlayer = new Player("Jeff");
+		testPlayer = new Player();
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         //set up the map and camera
@@ -102,16 +113,32 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         items[0][4].addItem(2);
         
         this.setScreen(new Inventory(items));
+		
+		//load object layer from tilemap
+		objects = map.getLayers().get("Object Layer 1").getObjects();
+		//store all trees and rocks in lists
+		treeObjects = new ArrayList<>();
+		rockObjects = new ArrayList<>();
+		//loop through all mapobjects, add to respective lists
+		for (int i = 0; i < objects.getCount(); i++) {
+			RectangleMapObject obj = (RectangleMapObject) objects.get(i);
+			if (obj.getName().equals("Tree")) {
+				//add to trees
+				treeObjects.add(new Interactable(obj));
+			} else if (obj.getName().equals("Rock")) {
+				//add to rocks
+				rockObjects.add(new Interactable(obj));
+			}
+		}
     }
 
     @Override
     public void render() {
         super.render();
-
         
-         Gdx.gl.glClearColor(1, 0, 0, 1);
-         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-         //sprite.draw(batch);
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //sprite.draw(batch);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -121,12 +148,12 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
         batch.setProjectionMatrix(cam.combined);
         //draw the background
         mapRenderer.render(backgroundLayers);
-	batch.begin();
+		batch.begin();
         batch.enableBlending();
         //draw the player
         testPlayer.draw(batch);
         
-	batch.end();
+		batch.end();
         //draw the foreground
         mapRenderer.render(foregroundLayers);
         //get player location, both on the map, and within the specific tile
@@ -201,8 +228,51 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
             
         }
         
-         }
+    }
 
+	/**
+	 * Causes the player to interact with the nearest object.
+	 *
+	 * @return Whether the player interacted with anything
+	 */
+	public boolean interact() {
+		//check each rock
+		for (int i = 0; i < rockObjects.size(); i++) {
+			//check whether distance is less than 20 pixels in either direction
+			if (distance(testPlayer, rockObjects.get(i).getRectangle()) <= 20) {
+				//TODO: interact with object
+				return true;
+			}
+		}
+
+		//check each tree
+		for (int i = 0; i < treeObjects.size(); i++) {
+			//check whether distance is less than 20 pixels in either direction
+			if (distance(testPlayer, treeObjects.get(i).getRectangle()) <= 20) {
+				//TODO: interact with object
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Calculates the distance between a player and a rectangle.
+	 *
+	 * @param player The Player to check distance for
+	 * @param obj The Rectangle to check distance for
+	 * @return The largest orthogonal distance between the Player and the
+	 * Rectangle
+	 */
+	public int distance(Player player, Rectangle obj) {
+		int leftDist = (int) Math.abs(player.getX() - (obj.getX() + obj.getWidth()));
+		int rightDist = (int) Math.abs(obj.getX() - (player.getX() + player.getWidth()));
+		int bottomDist = (int) Math.abs(player.getY() - (obj.getY() + obj.getHeight()));
+		int topDist = (int) Math.abs(obj.getY() - (player.getY() + player.getHeight()));
+		//return largest separation
+		return Math.max(topDist, Math.max(bottomDist, Math.max(leftDist, rightDist)));
+	}
+	
     @Override
     public void dispose() {
         batch.dispose();
@@ -277,10 +347,14 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     }
     
     @Override
-    public boolean keyDown(int keycode) {
-        
-        return false;
-    }
+	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.SPACE) {
+			//interact with closest object
+			interact();
+			return true;
+		}
+		return false;
+	}
 
     @Override
     public boolean keyUp(int keycode) {
@@ -319,4 +393,3 @@ public class SurviveAndThrive extends Game implements InputProcessor, Applicatio
     }
 
 }
-
