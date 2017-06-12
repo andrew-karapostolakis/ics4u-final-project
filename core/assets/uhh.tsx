@@ -154,6 +154,11 @@
    <object id="1" x="0.125" y="0.125" width="14.75" height="14.25"/>
   </objectgroup>
  </tile>
+ <tile id="109">
+  <properties>
+   <property name="water" type="bool" value="false"/>
+  </properties>
+ </tile>
  <tile id="116">
   <properties>
    <property name="water" type="bool" value="false"/>
