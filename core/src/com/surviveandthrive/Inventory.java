@@ -208,7 +208,7 @@ public class Inventory implements Screen {
                     if (oldInv[req1X][req1Y].getAmount() >= 2 && oldInv[req2X][req2Y].getAmount() >= 3) {
                         //removes 2 from both of the items
                         oldInv[req1X][req1Y].removeItem(2);
-                        oldInv[req2X][req2Y].removeItem(2);
+                        oldInv[req2X][req2Y].removeItem(3);
                         //runs through the item inventory again
                         for (int m = 0; m < 5; m++) {
                             for (int n = 0; n < 8; n++) {
@@ -300,10 +300,10 @@ public class Inventory implements Screen {
                         }
                     }
                     //checks to see if it is possible to subtract 2 from both of the items
-                    if (oldInv[req1X][req1Y].getAmount() >= 1 && oldInv[req2X][req2Y].getAmount() >= 3) {
+                    if (oldInv[req1X][req1Y].getAmount() >= 1 && oldInv[req2X][req2Y].getAmount() >= 5) {
                         //removes 2 from both of the items
-                        oldInv[req1X][req1Y].removeItem(2);
-                        oldInv[req2X][req2Y].removeItem(2);
+                        oldInv[req1X][req1Y].removeItem(1);
+                        oldInv[req2X][req2Y].removeItem(5);
                         //runs through the item inventory again
                         for (int m = 0; m < 5; m++) {
                             for (int n = 0; n < 8; n++) {
