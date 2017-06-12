@@ -55,7 +55,10 @@ public class SurviveAndThrive extends Game {
          */
         readInItems();
         
-        items[0][0].addItem(5);
+        items[0][0].addItem(6);
+        items[0][1].addItem(6);
+        items[0][3].addItem(2);
+        items[0][4].addItem(2);
         
         this.setScreen(new Inventory(items));
     }
@@ -116,20 +119,20 @@ public class SurviveAndThrive extends Game {
         
         for (int i = 0; i < 10; i++) {
             itemType = itemData[readInIndex].trim();
-            System.out.println(itemType);
+           
             readInIndex ++;
             if (itemType.equals("DONE")) {
                 break;
             }
             if (itemType.equals("Resource")) {
                 itemName = itemData[readInIndex].trim();;
-                System.out.println("test1");
+                
                 readInIndex ++;
                 items[0][ResourceIndex] = new Resource(itemName, 0);
                 ResourceIndex ++;
             } else if (itemType.equals("Food")) {
                 itemName = itemData[readInIndex].trim();;
-                System.out.println("test2");
+                
                 readInIndex ++;
                 foodValue = Integer.parseInt(itemData[readInIndex].trim());
                 readInIndex ++;
@@ -139,7 +142,7 @@ public class SurviveAndThrive extends Game {
                 FoodIndex ++;
             } else if (itemType.equals("Tool")) {
                 itemName = itemData[readInIndex].trim();;
-                System.out.println("test3");
+               
                 readInIndex ++;
                 recipe = itemData[readInIndex].trim();;
                 readInIndex ++;

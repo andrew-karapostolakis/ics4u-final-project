@@ -23,4 +23,8 @@ public class Tools extends Item{
         recipe = r;
     }
     
+    public String getRecipe(){
+        return recipe;
+    }
+    
 }

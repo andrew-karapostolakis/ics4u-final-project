@@ -11,18 +11,18 @@ Rabbit
 Food
 Petal_Salad
 5
-Flower_2
+2_Flower
 Food
 Rabbit_Stew
 20
-Rabbit_1
+1_Rabbit
 Tool
 Axe
-Wood_2_Stone 2
+2_Wood_2_Stone
 Tool
 Pickaxe
-Wood_2_Stone 3
+2_Wood_3_Stone
 Tool
 Sword
-Wood_1_Stone 5
+1_Wood_5_Stone
 DONE
