@@ -61,6 +61,7 @@ public class SurviveAndThrive extends Game {
         items[0][4].addItem(2);
         
         this.setScreen(new Inventory(items));
+
     }
 
     @Override
@@ -154,6 +155,10 @@ public class SurviveAndThrive extends Game {
         //} catch (IOException e) {
         //     System.out.println(e);
         //}
+
+        //this.setScreen(new MainMenu(this));
+        
+
     }
 
 }
