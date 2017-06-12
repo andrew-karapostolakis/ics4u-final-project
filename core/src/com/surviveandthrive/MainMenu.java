@@ -5,9 +5,7 @@ package com.surviveandthrive;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,9 +34,9 @@ public class MainMenu implements Screen {
     private BitmapFont white, black;
     private Label heading;
     
-    private SurviveAndThrive game;
+    private MainGame game;
 
-    public MainMenu(SurviveAndThrive game) {
+    public MainMenu(MainGame game) {
         this.game = game;
         
         stage = new Stage(new FitViewport(500,500));
@@ -76,6 +74,8 @@ public class MainMenu implements Screen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
             {
                 System.out.println("start game");
+                game.setScreen(new SurviveAndThrive(game));
+                
                 return true;
             }
             @Override
