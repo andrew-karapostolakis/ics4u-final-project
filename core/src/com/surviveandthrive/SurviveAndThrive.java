@@ -276,8 +276,9 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 		for (int i = 0; i < mapObjects.size(); i++) {
 			//System.out.println("Checking object " + i + ": distance " + distance(testPlayer, mapObjects.get(i).getRectangle()));
 			//check whether distance is less than 20 pixels in either direction
-			if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 20) {
-				System.out.println("Object " + i + " within reach");
+			System.out.println("Object " + i);
+			if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 100) {
+				System.out.println("Object " + i + " within reach (" + mapObjects.get(i).getName() + ")");
 				//TODO: interact with object
 				//access Item[][] items
 				//search through array
@@ -286,7 +287,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 				for (int j = 0; j < items.length; j++) {
 					for (int k = 0; k < items[j].length; k++) {
 						//check if current item matches original
-						if (mapObjects.get(i).getName().equals(items[j][k].getName())) {
+						if (items[j][k] != null && mapObjects.get(i).getName().equals(items[j][k].getName())) {
 							items[j][k].addItem(1);
 							System.out.println("Adding " + mapObjects.get(i).getName() + " to inventory");
 						}
@@ -306,21 +307,28 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 	 * @return The largest orthogonal distance between the Player and the
 	 * Rectangle
 	 */
-	public int distance(Player player, Rectangle obj) {
-		int leftDist = (int) Math.abs(player.getX() - (obj.getX() + obj.getWidth()));
-		//System.out.println("leftDist: " + player.getX() + " - (" + obj.getX() + " + " + obj.getWidth() + ") = " + leftDist);
+	public double distance(Player player, Rectangle obj) {
+		double playerX = player.getX() + (player.getWidth() / 2.0);
+		double playerY = player.getY() + (player.getHeight() / 2.0);
+		double objX = (obj.getX() + (obj.getWidth() / 2.0)) * 4.0;
+		double objY = (obj.getY() + (obj.getHeight() / 2.0)) * 4.0;
+		/*int leftDist = (int) Math.abs(player.getX() - (obj.getX() + obj.getWidth()));
 		int rightDist = (int) Math.abs(obj.getX() - (player.getX() + player.getWidth()));
 		int bottomDist = (int) Math.abs(player.getY() - (obj.getY() + obj.getHeight()));
-		int topDist = (int) Math.abs(obj.getY() - (player.getY() + player.getHeight()));
+		int topDist = (int) Math.abs(obj.getY() - (player.getY() + player.getHeight()));*/
+		double xDist = Math.abs(playerX - objX);
+		double yDist = Math.abs(playerY - objY);
+		System.out.println("Player position:(" + playerX + "," + playerY +
+			") Object position:(" + objX + "," + objY + ")");
 		//return largest separation
-		System.out.println("topDist: " + topDist + " bottomDist: " + bottomDist + " leftDist: " + leftDist + " rightDist: " + rightDist);
-		return Math.max(topDist, Math.max(bottomDist, Math.max(leftDist, rightDist)));
+		/*System.out.println("topDist: " + topDist + " bottomDist: " + bottomDist + " leftDist: " + leftDist + " rightDist: " + rightDist);
+		return Math.max(topDist, Math.max(bottomDist, Math.max(leftDist, rightDist)));*/
+		return Math.max(xDist, yDist);
 	}
 	
     @Override
     public void dispose() {
         batch.dispose();
-
     }
 
     public void readInItems() {
