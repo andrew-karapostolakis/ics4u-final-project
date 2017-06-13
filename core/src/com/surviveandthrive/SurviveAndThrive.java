@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-
 public class SurviveAndThrive implements InputProcessor, Screen {
 
     int[] backgroundLayers = {0};
@@ -39,10 +38,10 @@ public class SurviveAndThrive implements InputProcessor, Screen {
     TiledMap map;
     OrthographicCamera cam;
     TiledMapRenderer mapRenderer;
-	MapObjects objects;
-	List<Interactable> treeObjects;
-	List<Interactable> rockObjects;
-	List<Interactable> mapObjects;
+    MapObjects objects;
+    List<Interactable> treeObjects;
+    List<Interactable> rockObjects;
+    List<Interactable> mapObjects;
     String itemType, itemName, recipe;
     int foodValue;
     Item[][] items;
@@ -56,9 +55,12 @@ public class SurviveAndThrive implements InputProcessor, Screen {
     TiledMapTile[][] tile = new TiledMapTile[3][3];
     MainGame game;
     boolean hasSword;
+
+    Inventory inv;
+
     public SurviveAndThrive(MainGame g) {
         game = g;
-        
+
         batch = new SpriteBatch();
         testPlayer = new Player();
 
@@ -80,27 +82,29 @@ public class SurviveAndThrive implements InputProcessor, Screen {
         tileWidth = (int) layer.getTileWidth();
         tileHeight = (int) layer.getTileHeight();
 
-		//read item data from file
+        //read item data from file
         readInItems();
-		
-		//load object layer from tilemap
-		objects = map.getLayers().get("Object Layer 1").getObjects();
-		//store all trees and rocks in lists
-		treeObjects = new ArrayList<>();
-		rockObjects = new ArrayList<>();
-		mapObjects = new ArrayList<>();
-		//loop through all mapobjects, add to list
-		for (int i = 0; i < objects.getCount(); i++) {
-			Interactable obj = new Interactable((RectangleMapObject) objects.get(i));
-			obj.setName(obj.getProperties().get("name", String.class));
-			mapObjects.add(obj);
-		}
+
+        //load object layer from tilemap
+        objects = map.getLayers().get("Object Layer 1").getObjects();
+        //store all trees and rocks in lists
+        treeObjects = new ArrayList<>();
+        rockObjects = new ArrayList<>();
+        mapObjects = new ArrayList<>();
+        //loop through all mapobjects, add to list
+        for (int i = 0; i < objects.getCount(); i++) {
+            Interactable obj = new Interactable((RectangleMapObject) objects.get(i));
+            obj.setName(obj.getProperties().get("name", String.class));
+            mapObjects.add(obj);
+        }
+
     }
 
     /**
-	 * Renders the canvas.
-	 * @param f 
-	 */
+     * Renders the canvas.
+     *
+     * @param f
+     */
     @Override
     public void render(float f) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -159,7 +163,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             //make sure the player isnt running into any water tiles
             if (!(tile[0][1].getProperties().containsKey("water") && tilePosX <= 1)) {
-				//move player and camera
+                //move player and camera
                 cam.translate(-4, 0);
                 testPlayer.translateX(-4);
             }
@@ -168,7 +172,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             //make sure the player isnt running into any water tiles
             if (!(tile[2][1].getProperties().containsKey("water") && (tilePosX + 11) <= 15)) {
-				//move player and camera
+                //move player and camera
                 cam.translate(4, 0);
                 testPlayer.translateX(4);
             }
@@ -179,7 +183,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             if (!(tile[1][2].getProperties().containsKey("water") && tilePosY <= 1)) {
                 //check the tile next to the player as well so that they dont appear to be walking on water
                 if (!((tilePosX > 4 && tilePosY <= 1) && tile[2][2].getProperties().containsKey("water"))) {
-					//move player and camera
+                    //move player and camera
                     cam.translate(0, -4);
                     testPlayer.translateY(-4);
                 }
@@ -191,98 +195,131 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             if (!(tile[1][0].getProperties().containsKey("water") && tilePosY <= 12)) {
                 //check the tile next to the player as well so that they dont appear to be walking on water
                 if (!((tilePosX > 4 && tilePosY <= 12) && tile[2][0].getProperties().containsKey("water"))) {
-					//move player and camera
+                    //move player and camera
                     cam.translate(0, 4);
                     testPlayer.translateY(4);
                 }
             }
 
         }
-        
+
         //if the users pressed E
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            inv = new Inventory(items, game, this);
+            inv.updateInventory(items);
             //switches to the inventory screen
-            game.setScreen(new Inventory(items, game, this));
+            game.setScreen(inv);
         }
         //if the user pressed ESC
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             //switches to the pause menu
             game.setScreen(new PauseMenu(testPlayer, items, game, this));
         }
+        boolean added = false;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            //interact with closest object
+            interact();
+            //check if the user has a sword
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 7; j++) {
+                    if (items[i][j] != null && items[i][j].getName().equals("Sword")) {
+                        //if they do, set hasSword to true, if not make sure it is false
+                        hasSword = true;
+                    } else {
+                        hasSword = false;
+                    }
+                }
+            }
+            //check if the player is in a meadow
+            if (tile[1][1].getProperties().containsKey("meadow") && hasSword) {
+                //if they are look for the rest of the rabbits in their inventory, and add another one
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        if (items[i][j] != null && items[i][j].getName().equals("Rabbit")) {
+                            items[i][j].addItem(1);
+                            added = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 
-	/**
-	 * Causes the player to interact with the nearest object.
-	 *
-	 * @return Whether the interaction succeeded
-	 */
-	public boolean interact() {
-		//check each object in the map
-		for (int i = 0; i < mapObjects.size(); i++) {
-			//check whether distance is less than 100 pixels in either direction
-			if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 100) {
-				//check if object has resources left
-				if (mapObjects.get(i).interact()) {
+    /**
+     * Causes the player to interact with the nearest object.
+     *
+     * @return Whether the interaction succeeded
+     */
+    public boolean interact() {
+        System.out.println("pressed space");
+        //check each object in the map
+        for (int i = 0; i < mapObjects.size(); i++) {
+            //check whether distance is less than 100 pixels in either direction
+            if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 100) {
+                //check if object has resources left
+                if (mapObjects.get(i).interact()) {
 					//trigger object interaction
-					//check if item is already present in inventory
-					for (int j = 0; j < items.length; j++) {
-						for (int k = 0; k < items[j].length; k++) {
-							//check if current item matches original
-							if (items[j][k] != null && mapObjects.get(i).getName().equals(items[j][k].getName())) {
-								System.out.println(mapObjects.get(i).getName() + " found at index [" + j + "][" + k + "]");
-								//add item to matching inventory slot
-								items[j][k].addItem(1);
-								return true;
-							}
-						}
-					}
+                    //check if item is already present in inventory
+                    System.out.println("interaction triggered");
+                    for (int j = 0; j < items.length; j++) {
+                        for (int k = 0; k < items[j].length; k++) {
+                            //check if current item matches original
+                            if (items[j][k] != null && mapObjects.get(i).getName().equals(items[j][k].getName())) {
+                                System.out.println(mapObjects.get(i).getName() + " found at index [" + j + "][" + k + "]");
+                                //add item to matching inventory slot
+                                items[j][k].addItem(1);
+                                return true;
+                            }
+                        }
+                    }
 					//item not present in inventory, place in first empty slot
 					/*for (int j = 0; j < items.length; j++) {
-						for (int k = 0; k < items[j].length; k++) {
-							if (items[j][k] == null) {
-								//place in slot
-								items[j][k] = new Resource(mapObjects.get(i).getName(), 1);
-							}
-						}
-					}*/
-				} else {
-					//display message
-					JOptionPane.showMessageDialog(null, "This resource has been exhausted.");
-				}
-			}
-		}
-		return false;
-	}
+                     for (int k = 0; k < items[j].length; k++) {
+                     if (items[j][k] == null) {
+                     //place in slot
+                     items[j][k] = new Resource(mapObjects.get(i).getName(), 1);
+                     }
+                     }
+                     }*/
+                } else {
+                    //display message
+                    JOptionPane.showMessageDialog(null, "This resource has been exhausted.");
+                }
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * Calculates the distance between a player and a rectangle.
-	 *
-	 * @param player The Player to check distance for
-	 * @param obj The Rectangle to check distance for
-	 * @return The largest orthogonal distance between the Player and the
-	 * Rectangle
-	 */
-	public double distance(Player player, Rectangle obj) {
-		//get centres of objects
-		double playerX = player.getX() + (player.getWidth() / 2.0);
-		double playerY = player.getY() + (player.getHeight() / 2.0);
-		double objX = (obj.getX() + (obj.getWidth() / 2.0)) * 4.0;
-		double objY = (obj.getY() + (obj.getHeight() / 2.0)) * 4.0;
-		//get distances in each direction
-		double xDist = Math.abs(playerX - objX);
-		double yDist = Math.abs(playerY - objY);
-		//return larger distance
-		return Math.max(xDist, yDist);
-	}
-	
+    /**
+     * Calculates the distance between a player and a rectangle.
+     *
+     * @param player The Player to check distance for
+     * @param obj The Rectangle to check distance for
+     * @return The largest orthogonal distance between the Player and the
+     * Rectangle
+     */
+    public double distance(Player player, Rectangle obj) {
+        //get centres of objects
+        double playerX = player.getX() + (player.getWidth() / 2.0);
+        double playerY = player.getY() + (player.getHeight() / 2.0);
+        double objX = (obj.getX() + (obj.getWidth() / 2.0)) * 4.0;
+        double objY = (obj.getY() + (obj.getHeight() / 2.0)) * 4.0;
+        //get distances in each direction
+        double xDist = Math.abs(playerX - objX);
+        double yDist = Math.abs(playerY - objY);
+        //return larger distance
+        return Math.max(xDist, yDist);
+    }
+
     @Override
     public void dispose() {
         batch.dispose();
     }
 
-	/**
-	 * Reads in item data from a the file ItemRecipes.txt.
-	 */
+    /**
+     * Reads in item data from a the file ItemRecipes.txt.
+     */
     public void readInItems() {
         int ResourceIndex = 0;
         int FoodIndex = 0;
@@ -340,38 +377,10 @@ public class SurviveAndThrive implements InputProcessor, Screen {
     }
 
     @Override
-	public boolean keyDown(int keycode) {
-        boolean added = false;
-		if (keycode == Input.Keys.SPACE) {
-			//interact with closest object
-			interact();
-			//check if the user has a sword
-			for(int i = 0; i < 4; i++){
-				for(int j = 0; j < 7; j++){
-					if(items[i][j] != null && items[i][j].getName().equals("Sword")){
-						//if they do, set hasSword to true, if not make sure it is false
-						hasSword = true;
-					}else{
-						hasSword = false;
-					}
-				}
-			}
-			//check if the player is in a meadow
-			if(tile[1][1].getProperties().containsKey("meadow") && hasSword){
-				//if they are look for the rest of the rabbits in their inventory, and add another one
-				for(int i = 0; i < 4; i++){
-					for(int j = 0; j < 7; j++){
-						if(items[i][j] != null && items[i][j].getName().equals("Rabbit")){
-							items[i][j].addItem(1);
-							added = true;
-						}
-					}
-				}
-			}
-			return true;
-		}
-		return false;
-	}
+    public boolean keyDown(int keycode) {
+
+        return false;
+    }
 
     @Override
     public boolean keyUp(int keycode) {
@@ -422,8 +431,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 
     @Override
     public void show() {
-     }
-
+    }
 
     @Override
     public void hide() {

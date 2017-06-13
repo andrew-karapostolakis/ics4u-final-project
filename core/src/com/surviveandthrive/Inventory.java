@@ -135,14 +135,16 @@ public class Inventory implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 //returns the user to the game world when pressed
-				//convert ItemGrid into Item
-				Item[][] newInv = new Item[4][7];
-				for (int i = 0; i < newInv.length; i++) {
-					for (int j = 0; j < newInv[i].length; j++) {
-						newInv[i][j] = itemGrid[i][j].getStoredItem();
-					}
-				}
-				world.items = newInv;
+                
+/*//convert ItemGrid into Item
+                Item[][] newInv = new Item[4][7];
+                for (int i = 0; i < newInv.length; i++) {
+                    for (int j = 0; j < newInv[i].length; j++) {
+                        newInv[i][j] = itemGrid[i][j].getStoredItem();
+                    }
+                }
+                world.items = newInv;
+                */
                 game.setScreen(world);
                 //returns false to satusfy the inputlistener method
                 return true;
@@ -334,8 +336,8 @@ public class Inventory implements Screen {
                 //if the user is on the tools menu
                 if (tools) {
                     //loops through the array conatining all items
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 8; j++) {
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < 7; j++) {
                             //if there is an item in the current index
                             if (oldInv[i][j] != null) {
                                 //checks for the item called Wood
@@ -357,8 +359,8 @@ public class Inventory implements Screen {
                         oldInv[req1X][req1Y].removeItem(1);
                         oldInv[req2X][req2Y].removeItem(5);
                         //runs through the item inventory again
-                        for (int m = 0; m < 5; m++) {
-                            for (int n = 0; n < 8; n++) {
+                        for (int m = 0; m < 4; m++) {
+                            for (int n = 0; n < 7; n++) {
                                 if (oldInv[m][n] != null) {
                                     //finds the item that needs to be crafted
                                     if (oldInv[m][n].getName().equals("Sword")) {
@@ -377,8 +379,8 @@ public class Inventory implements Screen {
 
                 } else if (food) {
                     //loops through the array conatining all items
-                    for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < 8; j++) {
+                    for (int i = 0; i < 4; i++) {
+                        for (int j = 0; j < 7; j++) {
                             //if there is an item in the current index
                             if (oldInv[i][j] != null) {
                                 //checks for the item called Wood
@@ -395,8 +397,8 @@ public class Inventory implements Screen {
                         //removes 2 from both of the items
                         oldInv[req1X][req1Y].removeItem(2);
                         //runs through the item inventory again
-                        for (int m = 0; m < 5; m++) {
-                            for (int n = 0; n < 8; n++) {
+                        for (int m = 0; m < 4; m++) {
+                            for (int n = 0; n < 7; n++) {
                                 if (oldInv[m][n] != null) {
                                     //finds the item that needs to be crafted
                                     if (oldInv[m][n].getName().equals("Petal_Salad")) {
@@ -423,7 +425,7 @@ public class Inventory implements Screen {
         Crafting2.setVisible(false);
         Crafting3.setVisible(false);
 
-        //creates teh button to reveal the "food" menu
+        //creates the button to reveal the "food" menu
         TextButton foodMenu = new TextButton("Food", skin.get("default", TextButtonStyle.class));
         //sets the X and Y of the button
         foodMenu.setX(100);
@@ -444,6 +446,7 @@ public class Inventory implements Screen {
                 craftItem3.setText(oldInv[1][0].getName().replaceAll("_", " ") + "    requires:    " + ((Food) oldInv[1][0]).getRecipe().replaceAll("_", " "));
                 craftItem2.setText(oldInv[1][1].getName().replaceAll("_", " ") + "    requires:    " + ((Food) oldInv[1][1]).getRecipe().replaceAll("_", " "));
                 craftItem1.setText("");
+
                 //returns false to satisfy the overriden method requirement
                 return false;
             }
@@ -462,16 +465,18 @@ public class Inventory implements Screen {
                 food = false;
                 //sets tools to true
                 tools = true;
-                //sets teh reuired buttons to visible
+                //sets the required buttons to visible
                 Crafting1.setVisible(true);
                 Crafting2.setVisible(true);
                 Crafting3.setVisible(true);
+
                 //sets the text of the variables
                 craftItem1.setText(oldInv[2][0].getName().replaceAll("_", " ") + "    requires:    " + ((Tools) oldInv[2][0]).getRecipe().replaceAll("_", " "));
 
                 craftItem2.setText(oldInv[2][1].getName().replaceAll("_", " ") + "    requires:    " + ((Tools) oldInv[2][1]).getRecipe().replaceAll("_", " "));
 
                 craftItem3.setText(oldInv[2][2].getName().replaceAll("_", " ") + "    requires:    " + ((Tools) oldInv[2][2]).getRecipe().replaceAll("_", " "));
+
                 //returns false to satisfy the overriden method requirement
                 return false;
             }
@@ -531,23 +536,27 @@ public class Inventory implements Screen {
     //The next three methods do nothing but are required for implementing screen
     //pause, resume and hide are essentially for phone apps
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     /**
      * Updates the text of the item grid when called
+     *
      * @param itemLog the "log" of all items in the game
      */
     public void updateInventory(Item[][] itemLog) {
         boolean newItem;
         //k and l loop through the items array, which holds information for every type of item in the game
-        for (int k = 0; k < 5; k++) {
-            for (int l = 0; l < 10; l++) {
+        for (int k = 0; k < 4; k++) {
+            for (int l = 0; l < 7; l++) {
                 //checks to see if there is an item in the item storage
                 if (itemLog[k][l] != null) {
                     //if there is at least 1 of that item to be stored
