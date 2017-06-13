@@ -215,7 +215,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             //switches to the pause menu
             game.setScreen(new PauseMenu(testPlayer, items, game, this));
         }
-        boolean added = false;
+        
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             //interact with closest object
@@ -225,12 +225,21 @@ public class SurviveAndThrive implements InputProcessor, Screen {
                 for (int j = 0; j < 7; j++) {
                     if (items[i][j] != null && items[i][j].getName().equals("Sword")) {
                         //if they do, set hasSword to true, if not make sure it is false
-                        hasSword = true;
+                        
+                        if(items[i][j].getAmount() > 0){
+                            System.out.println("test");
+                            hasSword = true;
+                            break;
+                        }
                     } else {
                         hasSword = false;
                     }
                 }
+                if(hasSword){
+                    break;
+                }
             }
+            System.out.println(hasSword);
             //check if the player is in a meadow
             if (tile[1][1].getProperties().containsKey("meadow") && hasSword) {
                 //if they are look for the rest of the rabbits in their inventory, and add another one
@@ -238,10 +247,11 @@ public class SurviveAndThrive implements InputProcessor, Screen {
                     for (int j = 0; j < 7; j++) {
                         if (items[i][j] != null && items[i][j].getName().equals("Rabbit")) {
                             items[i][j].addItem(1);
-                            added = true;
+                            System.out.println("got rabbit");
                         }
                     }
                 }
+                
             }
         }
     }
