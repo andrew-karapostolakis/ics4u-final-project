@@ -52,16 +52,16 @@ public class PauseMenu implements Screen {
             //creates the writer
             BufferedWriter writer = new BufferedWriter(new FileWriter(stats));
             //writes the information to the data file
-            writer.write("Health: " + health);
-            writer.write("Hunger: " + food);
+            writer.write("Health: " + health + "\n");
+            writer.write("Hunger: " + food + "\n");
             //loops through the items array
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 7; j++) {
                     //if there is an item in the array
                     if (items[i][j] != null) {
                         //writes the information to the file
-                        writer.write("Item: " + items[i][j].getName());
-                        writer.write("Amount of item: " + items[i][j].getAmount());
+                        writer.write("Item: " + items[i][j].getName() + "\n");
+                        writer.write("Amount of item: " + items[i][j].getAmount() + "\n");
                     }
                 }
             }
