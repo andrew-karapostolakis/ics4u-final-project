@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -47,19 +48,20 @@ public class PauseMenu implements Screen {
         int food = testPlayer.getFood();
         //tries to write to the data file
         try {
+            File stats = new File("..\\stats.txt");
             //creates the writer
-            BufferedWriter writer = new BufferedWriter(new FileWriter("stats.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(stats));
             //writes the information to the data file
-            writer.write("Health: " + health);
-            writer.write("Hunger: " + food);
+            writer.write("Health: " + health + "\n");
+            writer.write("Hunger: " + food + "\n");
             //loops through the items array
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 7; j++) {
                     //if there is an item in the array
                     if (items[i][j] != null) {
                         //writes the information to the file
-                        writer.write("Item: " + items[i][j].getName());
-                        writer.write("Amount of item: " + items[i][j].getAmount());
+                        writer.write("Item: " + items[i][j].getName() + "\n");
+                        writer.write("Amount of item: " + items[i][j].getAmount() + "\n");
                     }
                 }
             }
