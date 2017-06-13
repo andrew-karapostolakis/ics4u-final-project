@@ -98,7 +98,7 @@ public class Inventory implements Screen {
                             Item temp = tempStorage;
                             //sets the temperary storage variable to the stored item
                             tempStorage = itemGrid[x][y].getStoredItem();
-                            //sets teh stored item to the second temp storage
+                            //sets the stored item to the second temp storage
                             itemGrid[x][y].setStored(temp);
                             //sets up the text with the new item
                             itemGrid[x][y].setText(temp.getAmount() + " " + temp.getName().replaceAll("_", " "));
