@@ -1,5 +1,5 @@
 /* A Karapostolakis, B Lit, G Smith
- * 2017-06-09
+ * 2017-06-13
  * A basic survival RPG */
 package com.surviveandthrive;
 
@@ -97,7 +97,6 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             obj.setName(obj.getProperties().get("name", String.class));
             mapObjects.add(obj);
         }
-
     }
 
     /**
@@ -209,6 +208,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             inv.updateInventory(items);
             //switches to the inventory screen
             game.setScreen(inv);
+
         }
         //if the user pressed ESC
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -381,6 +381,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 
         return false;
     }
+
 
     @Override
     public boolean keyUp(int keycode) {
