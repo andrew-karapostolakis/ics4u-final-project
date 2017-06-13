@@ -104,7 +104,7 @@ public class Inventory implements Screen {
                             itemGrid[x][y].setText(temp.getAmount() + " " + temp.getName().replaceAll("_", " "));
 
                         }
-                        //resturing true satisfies the buttun pressed override method
+                        //resturing true satisfies the button pressed override method
                         return true;
                     }
                 });
@@ -113,8 +113,8 @@ public class Inventory implements Screen {
                 //there is an item stored from the passed inventory
                 //then it checks to see if there is are at least 1 of that stored item
                 if (oldInv[x][y] != null) {
-                    //if there atucally is an item.
-                    //not just a refrence to the item
+                    //if there actually is an item.
+                    //not just a reference to the item
                     if (oldInv[x][y].getAmount() > 0) {
                         //sets the stored item to the previous item
                         itemGrid[x][y].setStored(oldInv[x][y]);
