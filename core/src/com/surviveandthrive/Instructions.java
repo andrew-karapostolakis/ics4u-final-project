@@ -1,5 +1,5 @@
-/* Brandon Lit, Garrett Smith
- * 2017-06-12
+/* A Karapostolakis, Brandon Lit, Garrett Smith
+ * 2017-06-13
  * This is the instructions screen*/
 package com.surviveandthrive;
 

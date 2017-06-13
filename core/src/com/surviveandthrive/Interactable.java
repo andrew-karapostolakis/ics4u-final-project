@@ -1,5 +1,5 @@
 /* Garrett Smith, A Karapostolakis
- * 2017-06-09
+ * 2017-06-13
  * This class will handle all of the items that can be interacted with in the world */
 package com.surviveandthrive;
 

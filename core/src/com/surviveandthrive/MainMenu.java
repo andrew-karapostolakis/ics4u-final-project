@@ -1,5 +1,5 @@
 /* Brandon Lit
- * 2017-05-29
+ * 2017-06-13
  * This is the main menu window class*/
 package com.surviveandthrive;
 

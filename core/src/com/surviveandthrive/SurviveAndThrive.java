@@ -1,5 +1,5 @@
 /* A Karapostolakis, B Lit, G Smith
- * 2017-06-09
+ * 2017-06-13
  * A basic survival RPG */
 package com.surviveandthrive;
 
