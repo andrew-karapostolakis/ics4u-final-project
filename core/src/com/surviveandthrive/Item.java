@@ -56,6 +56,7 @@ public abstract class Item {
      */
     public void addItem(int x) {
         amount += x;
+		System.out.println(x + " items added");
     }
     /**
      * subtracts X number of items from the current total

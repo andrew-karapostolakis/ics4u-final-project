@@ -34,17 +34,18 @@ public class Instructions implements Screen {
         
         //creates the instructions paragraph
         instructions = new Label("Welcome to Survive and Thrive, an open world exploration game"
-                + "\nwhere the player gathers resources to make tools and other useful things."
-                + "\nUpon entering the world, you will find yourself in a desert. Use the arrow"
-                + "\nkeys to move around into different biomes. You will find forests, meadows,"
-                + "\nrivers, and so on. Keep in mind that you are incapable of swimming, and must"
-                + "\ntherefore find a bridge to cross any rivers that you come to. Most of the"
-                + "\nbiomes have something useful in them. For"
-                + "\nexample; in forests you can get wood, in quarries you can get rocks, and in"
-                + "\nmeadows you can get rabbits and flowers. Once you start collecting items"
-                + "\nyou can press \"e\" to view your inventory. Once in your inventory you can"
-                + "\nselect the crafting menu to make new and fancy items. Sometimes you require a"
-                + "\nitem to collect. Rabbits, for example, require a sword to catch when. ", skin);
+            + "\nwhere the player gathers resources to make tools and other useful things."
+            + "\nUpon entering the world, you will find yourself in a desert. Use the arrow"
+            + "\nkeys to move around into different biomes. You will find forests, meadows,"
+            + "\nrivers, and so on. Keep in mind that you are incapable of swimming, and must"
+            + "\ntherefore find a bridge to cross any rivers that you come to. Most of the"
+            + "\nbiomes have something useful in them. For"
+            + "\nexample; in forests you can get wood, in quarries you can get rocks, and in"
+            + "\nmeadows you can get rabbits and flowers. Once you start collecting items"
+            + "\nyou can press \"e\" to view your inventory. Once in your inventory you can"
+            + "\nselect the crafting menu to make new and fancy items. Sometimes you require a"
+            + "\nitem to collect resources. Rabbits, for example, require a sword to catch them."
+			+ "\n\nGame programmed by Andrew Karapostolakis, Brandon Lit, and Garrett Smith", skin);
         instructions.setY(250);
     }
 

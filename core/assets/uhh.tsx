@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="tileset" tilewidth="15" tileheight="15" spacing="2" margin="2" tilecount="121" columns="11">
  <image source="tileset.png" trans="ff00ff" width="188" height="188"/>
+ <tile id="16">
+  <properties>
+   <property name="meadow" type="bool" value="false"/>
+  </properties>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="meadow" type="bool" value="false"/>
+  </properties>
+ </tile>
+ <tile id="18">
+  <properties>
+   <property name="meadow" type="bool" value="false"/>
+  </properties>
+ </tile>
+ <tile id="19">
+  <properties>
+   <property name="meadow" type="bool" value="false"/>
+  </properties>
+ </tile>
  <tile id="20">
   <properties>
    <property name="tree" type="bool" value="false"/>
@@ -24,6 +44,11 @@
     <property name="water" type="bool" value="true"/>
    </properties>
   </objectgroup>
+ </tile>
+ <tile id="45">
+  <properties>
+   <property name="meadow" type="bool" value="false"/>
+  </properties>
  </tile>
  <tile id="83">
   <objectgroup draworder="index">
