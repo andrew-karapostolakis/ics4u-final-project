@@ -36,7 +36,7 @@ public class MainMenu implements Screen {
     public MainMenu(MainGame game) {
         //sets the game to the passed game
         this.game = game;
-        //sets teh stage to a viewport
+        //sets the stage to a viewport
         stage = new Stage(new FitViewport(500,500));
         //sets teh input processor to the current stage
         Gdx.input.setInputProcessor(stage);
