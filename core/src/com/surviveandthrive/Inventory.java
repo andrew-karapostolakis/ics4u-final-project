@@ -40,7 +40,7 @@ public class Inventory implements Screen {
     private MainGame game;
     private SurviveAndThrive world;
 
-    public Inventory(final Item[][] oldInv, MainGame g, SurviveAndThrive w) {
+    public Inventory(Item[][] oldInv, MainGame g, SurviveAndThrive w) {
         stage = new Stage();
         game = g;
         world = w;
