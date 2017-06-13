@@ -6,9 +6,11 @@ package com.surviveandthrive;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import java.io.BufferedWriter;
@@ -24,15 +26,19 @@ public class PauseMenu implements Screen {
     Stage stage;
     Skin skin;
     SurviveAndThrive world;
+    BitmapFont white;
+    Label heading;
 
     public PauseMenu(Player player, Item[][] item, MainGame g, SurviveAndThrive w) {
         testPlayer = player;
         items = item;
         game = g;
+        world = w;
         //creates a new skin
         skin = new Skin(Gdx.files.internal("uiskin.json"));
-        //sets the input to be recieved from this stage
-        Gdx.input.setInputProcessor(stage);
+        
+        //creates a white font
+        white = new BitmapFont(Gdx.files.internal("Fonts/MainMenuFont.fnt"), false);
 
     }
 
@@ -67,30 +73,35 @@ public class PauseMenu implements Screen {
 
     @Override
     public void show() {
+        //creates a new stage
         stage = new Stage();
+
+        //sets the input to be recieved from this stage
+        Gdx.input.setInputProcessor(stage);
 
         //creates a textbutton
         TextButton resume = new TextButton("Resume", skin);
         //sets the resumes buttons position
-        resume.setX(300);
-        resume.setY(400);
+        resume.setX(150);
+        resume.setY(250);
+        resume.setSize(300,100);
         //adds an input listener to the button
         resume.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 //returns the user to the game world when pressed
                 game.setScreen(world);
-                //returns false to satusfy the inputlistener method
+                //returns false to satisfy the inputlistener method
                 return false;
             }
         });
-        resume.pad(50);
 
         //creates a textbutton
         TextButton exit = new TextButton("Exit", skin);
         //sets the exit buttons position
-        exit.setX(300);
+        exit.setX(150);
         exit.setY(100);
+        exit.setSize(300,100);
         //adds an input listener to the button
         exit.addListener(new InputListener() {
             @Override
@@ -103,8 +114,19 @@ public class PauseMenu implements Screen {
                 return false;
             }
         });
-
+        
+        //creates a label style
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        //sets the font to the white text
+        labelStyle.font = white;
+        //creates a new label with the label style
+        heading = new Label("Paused", labelStyle);
+        //sets the headings position
+        heading.setPosition(225, 450);
+        
+        
         //adds the actors to the stage
+        stage.addActor(heading);
         stage.addActor(resume);
         stage.addActor(exit);
     }
