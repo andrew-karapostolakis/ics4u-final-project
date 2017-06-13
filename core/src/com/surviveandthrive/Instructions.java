@@ -29,8 +29,10 @@ public class Instructions implements Screen {
         game = newGame;
         style = newStyle;
         textButtonStyle = newButtonStyle;
+        //creates a new skin
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         
+        //creates the instructions paragraph
         instructions = new Label("Welcome to Survive and Thrive, an open world exploration game"
                 + "\nwhere the player gathers resources to make tools and other useful things."
                 + "\nUpon entering the world, you will find yourself in a desert. Use the arrow"
@@ -48,22 +50,27 @@ public class Instructions implements Screen {
 
     @Override
     public void show() {
-
+        //creates the new stage
         stage = new Stage();
+        //sets the input processor to the stage
         Gdx.input.setInputProcessor(stage);
 
+        //creates the start button
         start = new TextButton("Start Game", skin);
         start.setX(250);
         start.setY(125);
+        //adds an input listener
         start.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                //sets the screen to the survive and thrive game
                 game.setScreen(new SurviveAndThrive(game));
 
                 return true;
             }
         });
-
+        
+        //adds the label and start button
         stage.addActor(instructions);
         stage.addActor(start);
     }
@@ -96,6 +103,7 @@ public class Instructions implements Screen {
 
     @Override
     public void dispose() {
+        //disposes of the stage and it's actors
         stage.dispose();
     }
 
