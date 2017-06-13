@@ -218,25 +218,35 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 	public boolean interact() {
 		//check each object in the map
 		for (int i = 0; i < mapObjects.size(); i++) {
-			//System.out.println("Checking object " + i + ": distance " + distance(testPlayer, mapObjects.get(i).getRectangle()));
 			//check whether distance is less than 100 pixels in either direction
-			System.out.println("Object " + i);
 			if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 100) {
-				//trigger object interaction
-				for (int j = 0; j < items.length; j++) {
-					for (int k = 0; k < items[j].length; k++) {
-						//check if current item matches original
-						if (items[j][k] != null && mapObjects.get(i).getName().equals(items[j][k].getName())) {
-							//check if object has resources left
-							if (mapObjects.get(i).interact()) {
+				//check if object has resources left
+				if (mapObjects.get(i).interact()) {
+					//trigger object interaction
+					//check if item is already present in inventory
+					for (int j = 0; j < items.length; j++) {
+						for (int k = 0; k < items[j].length; k++) {
+							//check if current item matches original
+							if (items[j][k] != null && mapObjects.get(i).getName().equals(items[j][k].getName())) {
+								System.out.println(mapObjects.get(i).getName() + " found at index [" + j + "][" + k + "]");
+								//add item to matching inventory slot
 								items[j][k].addItem(1);
 								return true;
-							} else {
-								//display message
-								JOptionPane.showMessageDialog(null, "This resource has been exhausted.");
 							}
 						}
 					}
+					//item not present in inventory, place in first empty slot
+					/*for (int j = 0; j < items.length; j++) {
+						for (int k = 0; k < items[j].length; k++) {
+							if (items[j][k] == null) {
+								//place in slot
+								items[j][k] = new Resource(mapObjects.get(i).getName(), 1);
+							}
+						}
+					}*/
+				} else {
+					//display message
+					JOptionPane.showMessageDialog(null, "This resource has been exhausted.");
 				}
 			}
 		}

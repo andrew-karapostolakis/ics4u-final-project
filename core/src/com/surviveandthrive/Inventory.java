@@ -54,7 +54,7 @@ public class Inventory implements Screen {
             for (int y = 0; y < 7; y++) {
                 //creates a new "Item slot"
                 itemGrid[x][y] = new ItemSlot("", skin, x, y);
-                //sets teh position of the new item slot
+                //sets the position of the new item slot
                 itemGrid[x][y].setPosition(35 + (y * 75), 250 + (x * 75));
                 //sets the default size of the button
                 itemGrid[x][y].setSize(75, 75);
@@ -135,9 +135,17 @@ public class Inventory implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 //returns the user to the game world when pressed
+				//convert ItemGrid into Item
+				Item[][] newInv = new Item[4][7];
+				for (int i = 0; i < newInv.length; i++) {
+					for (int j = 0; j < newInv[i].length; j++) {
+						newInv[i][j] = itemGrid[i][j].getStoredItem();
+					}
+				}
+				world.items = newInv;
                 game.setScreen(world);
                 //returns false to satusfy the inputlistener method
-                return false;
+                return true;
             }
         });
         //creates three labels for the crafting panel
