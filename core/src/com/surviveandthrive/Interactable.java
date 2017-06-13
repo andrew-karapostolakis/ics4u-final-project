@@ -36,7 +36,7 @@ public class Interactable extends RectangleMapObject {
 	 * @return A boolean indicating the success/fail of the interaction
 	 */
 	public boolean interact() {
-		if (resourcesRemaining >= 0) {
+		if (resourcesRemaining > 0) {
 			resourcesRemaining--;
 			return true;
 		} else {

@@ -120,7 +120,7 @@ public class MainMenu implements Screen {
         
         
         //creates the instruction button, sets the bounds and adds a listener
-        instructions = new TextButton("Instructions", textButtonStyle);
+        instructions = new TextButton("Instructions\nand Credits", textButtonStyle);
         instructions.setBounds(100, 180, 300, 100);
         instructions.addListener(new InputListener()
         {
@@ -144,7 +144,6 @@ public class MainMenu implements Screen {
         table.row();
         table.add(exit);
 
-        table.debug();
         //adds the table to the stage
         stage.addActor(table);
 

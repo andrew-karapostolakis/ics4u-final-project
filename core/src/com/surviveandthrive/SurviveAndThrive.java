@@ -341,33 +341,33 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 
     @Override
 	public boolean keyDown(int keycode) {
-            boolean added = false;
+        boolean added = false;
 		if (keycode == Input.Keys.SPACE) {
 			//interact with closest object
 			interact();
-                        //check if the user has a sword
-                        for(int i = 0; i < 4; i++){
-                            for(int j = 0; j < 7; j++){
-                                if(items[i][j].getName().equals("Sword")){
-                                    //if they do, set hasSword to true, if not make sure it is false
-                                    hasSword = true;
-                                }else{
-                                    hasSword = false;
-                                }
-                            }
-                        }
-                        //chw=eck if the player is in a meadow
-                        if(tile[1][1].getProperties().containsKey("meadow") && hasSword){
-                            //if they are look for the rest of the rabbits in their inventory, and add another one
-                            for(int i = 0; i < 4; i++){
-                                for(int j = 0; j < 7; j++){
-                                    if(items[i][j].getName().equals("Rabbit")){
-                                        items[i][j].addItem(1);
-                                        added = true;
-                                    }
-                                }
-                            }
-                        }
+			//check if the user has a sword
+			for(int i = 0; i < 4; i++){
+				for(int j = 0; j < 7; j++){
+					if(items[i][j] != null && items[i][j].getName().equals("Sword")){
+						//if they do, set hasSword to true, if not make sure it is false
+						hasSword = true;
+					}else{
+						hasSword = false;
+					}
+				}
+			}
+			//check if the player is in a meadow
+			if(tile[1][1].getProperties().containsKey("meadow") && hasSword){
+				//if they are look for the rest of the rabbits in their inventory, and add another one
+				for(int i = 0; i < 4; i++){
+					for(int j = 0; j < 7; j++){
+						if(items[i][j] != null && items[i][j].getName().equals("Rabbit")){
+							items[i][j].addItem(1);
+							added = true;
+						}
+					}
+				}
+			}
 			return true;
 		}
 		return false;
