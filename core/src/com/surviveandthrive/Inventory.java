@@ -33,12 +33,9 @@ import java.util.Set;
 public class Inventory implements Screen {
 
     private Stage stage;
-    private Table container;
-    private TextureAtlas atlas;
     private ItemSlot[][] itemGrid = new ItemSlot[4][7];
     private Item tempStorage = null;
     private Skin skin;
-    private SpriteBatch batch;
     private boolean food = false, tools = false;
     private MainGame game;
     private SurviveAndThrive world;
@@ -50,8 +47,6 @@ public class Inventory implements Screen {
         //atlas = new TextureAtlas("uiskin.json");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
-
-        batch = new SpriteBatch();
 
         //loops through the array  of item slots.
         //Each slot is represented by a button in the grid on the inventory screen
@@ -103,13 +98,13 @@ public class Inventory implements Screen {
                             Item temp = tempStorage;
                             //sets the temperary storage variable to the stored item
                             tempStorage = itemGrid[x][y].getStoredItem();
-                            //sets teh stored item to the second temp storage
+                            //sets the stored item to the second temp storage
                             itemGrid[x][y].setStored(temp);
                             //sets up the text with the new item
                             itemGrid[x][y].setText(temp.getAmount() + " " + temp.getName().replaceAll("_", " "));
 
                         }
-                        //resturing true satisfies the buttun pressed override method
+                        //resturing true satisfies the button pressed override method
                         return true;
                     }
                 });
@@ -118,8 +113,8 @@ public class Inventory implements Screen {
                 //there is an item stored from the passed inventory
                 //then it checks to see if there is are at least 1 of that stored item
                 if (oldInv[x][y] != null) {
-                    //if there atucally is an item.
-                    //not just a refrence to the item
+                    //if there actually is an item.
+                    //not just a reference to the item
                     if (oldInv[x][y].getAmount() > 0) {
                         //sets the stored item to the previous item
                         itemGrid[x][y].setStored(oldInv[x][y]);
