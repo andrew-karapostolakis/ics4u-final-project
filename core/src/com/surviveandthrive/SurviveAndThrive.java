@@ -24,6 +24,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -41,6 +42,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 	MapObjects objects;
 	List<Interactable> treeObjects;
 	List<Interactable> rockObjects;
+	List<Interactable> mapObjects;
     String itemType, itemName, recipe;
     int foodValue;
     Item[][] items;
@@ -57,7 +59,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
     public SurviveAndThrive(MainGame g) {
         game = g;
         
-         batch = new SpriteBatch();
+        batch = new SpriteBatch();
         testPlayer = new Player();
 
         float w = Gdx.graphics.getWidth();
@@ -122,16 +124,12 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 		//store all trees and rocks in lists
 		treeObjects = new ArrayList<>();
 		rockObjects = new ArrayList<>();
-		//loop through all mapobjects, add to respective lists
+		mapObjects = new ArrayList<>();
+		//loop through all mapobjects, add to list
 		for (int i = 0; i < objects.getCount(); i++) {
-			RectangleMapObject obj = (RectangleMapObject) objects.get(i);
-			if (obj.getName().equals("Tree")) {
-				//add to trees
-				treeObjects.add(new Interactable(obj));
-			} else if (obj.getName().equals("Rock")) {
-				//add to rocks
-				rockObjects.add(new Interactable(obj));
-			}
+			Interactable obj = new Interactable((RectangleMapObject) objects.get(i));
+			obj.setName(obj.getProperties().get("name", String.class));
+			mapObjects.add(obj);
 		}
     }
 
@@ -232,9 +230,15 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             }
 
         }
-
+        //if the users pressed E
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            //switches to the inventory screen
             game.setScreen(new Inventory(items, game, this));
+        }
+        //if the user pressed ESC
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            //switches to the pause menu
+            game.setScreen(new PauseMenu(testPlayer, items, game, this));
         }
     }
 
@@ -244,11 +248,24 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 	 * @return Whether the player interacted with anything
 	 */
 	public boolean interact() {
+		System.out.println("interact");
 		//check each rock
-		for (int i = 0; i < rockObjects.size(); i++) {
+		/*for (int i = 0; i < rockObjects.size(); i++) {
 			//check whether distance is less than 20 pixels in either direction
 			if (distance(testPlayer, rockObjects.get(i).getRectangle()) <= 20) {
 				//TODO: interact with object
+				//access Item[][] items
+				//search through array
+				//Items[i][j].getName
+				//if names match, Items[i][j].addItem(amount)
+				for (int j = 0; j < items.length; j++) {
+					for (int k = 0; k < items[j].length; k++) {
+						//check if current item matches original
+						if (rockObjects.get(i).getName().equals(items[j][k].getName())) {
+							items[j][k].addItem(1);
+						}
+					}
+				}
 				return true;
 			}
 		}
@@ -258,6 +275,29 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 			//check whether distance is less than 20 pixels in either direction
 			if (distance(testPlayer, treeObjects.get(i).getRectangle()) <= 20) {
 				//TODO: interact with object
+				return true;
+			}
+		}*/
+		//check each object in the map
+		for (int i = 0; i < mapObjects.size(); i++) {
+			//System.out.println("Checking object " + i + ": distance " + distance(testPlayer, mapObjects.get(i).getRectangle()));
+			//check whether distance is less than 20 pixels in either direction
+			if (distance(testPlayer, mapObjects.get(i).getRectangle()) <= 20) {
+				System.out.println("Object " + i + " within reach");
+				//TODO: interact with object
+				//access Item[][] items
+				//search through array
+				//Items[i][j].getName
+				//if names match, Items[i][j].addItem(amount)
+				for (int j = 0; j < items.length; j++) {
+					for (int k = 0; k < items[j].length; k++) {
+						//check if current item matches original
+						if (mapObjects.get(i).getName().equals(items[j][k].getName())) {
+							items[j][k].addItem(1);
+							System.out.println("Adding " + mapObjects.get(i).getName() + " to inventory");
+						}
+					}
+				}
 				return true;
 			}
 		}
@@ -274,10 +314,12 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 	 */
 	public int distance(Player player, Rectangle obj) {
 		int leftDist = (int) Math.abs(player.getX() - (obj.getX() + obj.getWidth()));
+		//System.out.println("leftDist: " + player.getX() + " - (" + obj.getX() + " + " + obj.getWidth() + ") = " + leftDist);
 		int rightDist = (int) Math.abs(obj.getX() - (player.getX() + player.getWidth()));
 		int bottomDist = (int) Math.abs(player.getY() - (obj.getY() + obj.getHeight()));
 		int topDist = (int) Math.abs(obj.getY() - (player.getY() + player.getHeight()));
 		//return largest separation
+		System.out.println("topDist: " + topDist + " bottomDist: " + bottomDist + " leftDist: " + leftDist + " rightDist: " + rightDist);
 		return Math.max(topDist, Math.max(bottomDist, Math.max(leftDist, rightDist)));
 	}
 	
