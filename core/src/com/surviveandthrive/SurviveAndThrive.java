@@ -56,6 +56,9 @@ public class SurviveAndThrive implements InputProcessor, Screen {
     TiledMapTile[][] tile = new TiledMapTile[3][3];
     MainGame game;
     boolean hasSword;
+    
+    Inventory screen1;
+    
     public SurviveAndThrive(MainGame g) {
         game = g;
         
@@ -83,6 +86,8 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 		//read item data from file
         readInItems();
 		
+        
+        screen1 = new Inventory(items, game, this);
 		//load object layer from tilemap
 		objects = map.getLayers().get("Object Layer 1").getObjects();
 		//store all trees and rocks in lists
@@ -202,6 +207,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
         //if the users pressed E
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             //switches to the inventory screen
+            screen1.updateInventory(items);
             game.setScreen(new Inventory(items, game, this));
         }
         //if the user pressed ESC
@@ -364,6 +370,7 @@ public class SurviveAndThrive implements InputProcessor, Screen {
 						if(items[i][j] != null && items[i][j].getName().equals("Rabbit")){
 							items[i][j].addItem(1);
 							added = true;
+                                                        System.out.println("got rabbit");
 						}
 					}
 				}
