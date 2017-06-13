@@ -1,3 +1,6 @@
+## Project-specific section ##
+core/assets/stats.txt
+
 ## Java section ##
 # Compiled class file
 *.class

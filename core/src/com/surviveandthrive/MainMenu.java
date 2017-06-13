@@ -30,6 +30,7 @@ public class MainMenu implements Screen {
     private TextButton start, exit, instructions;
     private BitmapFont white, black;
     private Label heading;
+    private MainMenu instructionsMenu;
     
     private MainGame game;
 
@@ -50,6 +51,8 @@ public class MainMenu implements Screen {
         table.setFillParent(true);
         //sets the bounds of the table
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //sets this main menu to the one that will be passed to the instruction manual
+        instructionsMenu = this;
     }
 
     @Override
@@ -107,6 +110,15 @@ public class MainMenu implements Screen {
         //pads the exit button
         exit.pad(15);
 
+                
+        //creates a label style
+        LabelStyle labelStyle = new LabelStyle();
+        //sets the font to the white text
+        labelStyle.font = white;
+        //creates a new label with the label style
+        heading = new Label("Survive and Thrive", labelStyle);
+        
+        
         //creates the instruction button, sets the bounds and adds a listener
         instructions = new TextButton("Instructions", textButtonStyle);
         instructions.setBounds(100, 180, 300, 100);
@@ -116,19 +128,12 @@ public class MainMenu implements Screen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button)
             {
                 //switches screens to the instruction screen
-                System.out.println("//TODO add instructions");
+                game.setScreen(new Instructions(game, labelStyle, textButtonStyle));
                 return true;
             }
         });
        //pads the instructions
         instructions.pad(35);
-        
-        //creates a label style
-        LabelStyle labelStyle = new LabelStyle();
-        //sets the font to the white text
-        labelStyle.font = white;
-        //creates a new label with the label style
-        heading = new Label("Survive and Thrive", labelStyle);
 
         //adds everything to the table
         table.add(heading);
