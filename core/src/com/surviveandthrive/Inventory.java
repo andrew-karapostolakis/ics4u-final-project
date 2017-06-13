@@ -33,12 +33,9 @@ import java.util.Set;
 public class Inventory implements Screen {
 
     private Stage stage;
-    private Table container;
-    private TextureAtlas atlas;
     private ItemSlot[][] itemGrid = new ItemSlot[4][7];
     private Item tempStorage = null;
     private Skin skin;
-    private SpriteBatch batch;
     private boolean food = false, tools = false;
     private MainGame game;
     private SurviveAndThrive world;
@@ -50,8 +47,6 @@ public class Inventory implements Screen {
         //atlas = new TextureAtlas("uiskin.json");
         skin = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
-
-        batch = new SpriteBatch();
 
         //loops through the array  of item slots.
         //Each slot is represented by a button in the grid on the inventory screen

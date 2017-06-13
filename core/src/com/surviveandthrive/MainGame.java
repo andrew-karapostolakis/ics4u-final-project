@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/* Brandon Lit
+ * 2017-06-12 
+ * This is the class which extends Game to manage all the screens*/
 package com.surviveandthrive;
 
 import com.badlogic.gdx.Game;

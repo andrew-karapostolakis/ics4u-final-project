@@ -232,9 +232,15 @@ public class SurviveAndThrive implements InputProcessor, Screen {
             }
 
         }
-
+        //if the users pressed E
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            //switches to the inventory screen
             game.setScreen(new Inventory(items, game, this));
+        }
+        //if the user pressed ESC
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            //switches to the pause menu
+            game.setScreen(new PauseMenu(testPlayer, items, game, this));
         }
     }
 
